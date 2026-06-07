@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIAGRAMOGRAMA</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Figtree:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F0EDE6;
+  --bg2: #E8E4DB;
+  --bg3: #DEDAD0;
+  --surface: #FAF9F6;
+  --ink: #1C1A17;
+  --ink2: #4A4740;
+  --ink3: #9A9590;
+  --teal: #0F6E56;
+  --teal-l: #E1F5EE;
+  --teal-m: #1D9E75;
+  --purple: #534AB7;
+  --purple-l: #EEEDFE;
+  --coral: #993C1D;
+  --coral-l: #FAECE7;
+  --amber: #854F0B;
+  --amber-l: #FAEEDA;
+  --border: rgba(28,26,23,0.10);
+  --border2: rgba(28,26,23,0.06);
+  --r: 12px;
+  --r-sm: 8px;
+  --sans: 'Space Grotesk', sans-serif;
+  --body: 'Figtree', sans-serif;
+  --sidebar: 220px;
+  --topbar: 56px;
+}
+
+html, body { height: 100%; }
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  height: var(--topbar);
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 20px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.logo {
+  font-family: sans-serif;
+  font-size: 17px;
+  font-weight: 900;
+  color: var(--bg);
+  letter-spacing: 0.12em;
+  flex-shrink: 0;
+}
+
+.topbar-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.15); }
+
+.topbar-nav { display: flex; gap: 2px; flex: 1; }
+
+.topbar-btn {
+  font-family: var(--sans);
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.topbar-btn:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.08); }
+.topbar-btn.active { color: var(--bg); background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.2); }
+.topbar-btn:disabled { opacity: 0.3; cursor: default; }
+
+.topbar-right { display: flex; gap: 8px; align-items: center; }
+
+.lamina-counter {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.04em;
+}
+
+.sync-status {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sync-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transition: background 0.3s;
+}
+.sync-dot.ok { background: #4ade80; }
+.sync-dot.syncing { background: #fbbf24; animation: pulse 1s infinite; }
+.sync-dot.error { background: #f87171; }
+
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+.btn-login {
+  font-family: var(--sans);
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-login:hover { background: rgba(255,255,255,0.1); }
+
+.btn-logout {
+  font-family: var(--sans);
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: transparent;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-logout:hover { color: rgba(255,255,255,0.7); }
+
+/* ── LOGIN SCREEN ── */
+.login-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 20px;
+  padding: 40px;
+}
+
+.login-logo {
+  font-family: sans-serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.12em;
+  margin-bottom: 8px;
+}
+
+.login-sub {
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--ink3);
+  font-style: italic;
+  text-align: center;
+  max-width: 340px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.login-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 32px;
+  text-align: center;
+  max-width: 380px;
+  width: 100%;
+}
+
+.login-card h2 {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.login-card p {
+  font-size: 12px;
+  color: var(--ink3);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.btn-google {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 11px 22px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+}
+.btn-google:hover { background: var(--bg2); border-color: var(--ink3); }
+
+.google-icon {
+  width: 16px; height: 16px;
+}
+
+/* ── LAYOUT ── */
+.app-body {
+  display: none;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - var(--topbar));
+}
+.app-body.visible { display: flex; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 16px 0;
+}
+
+.sidebar-section { padding: 0 12px; margin-bottom: 24px; }
+
+.sidebar-label {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  padding: 0 8px;
+  margin-bottom: 6px;
+}
+
+.sidebar-item {
+  font-family: var(--sans);
+  font-size: 12px;
+  padding: 7px 10px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  color: var(--ink2);
+  transition: all 0.12s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+.sidebar-item:hover { background: var(--bg2); color: var(--ink); }
+.sidebar-item.active { background: var(--bg3); color: var(--ink); font-weight: 500; }
+
+.sidebar-badge {
+  font-size: 10px;
+  background: var(--bg3);
+  color: var(--ink3);
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+.sidebar-divider { height: 1px; background: var(--border2); margin: 8px 12px; }
+
+/* ── MAIN ── */
+.main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── VIEWS ── */
+.view { display: none; width: 100%; flex-direction: column; gap: 20px; }
+.view.active { display: flex; }
+
+/* ── PAGE HEADER ── */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-title {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.page-subtitle {
+  font-size: 12px;
+  color: var(--ink3);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+/* ── STATS ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px 16px;
+}
+
+.card-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 6px;
+}
+
+.card-value {
+  font-family: var(--sans);
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+}
+
+/* ── FORM ── */
+.form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px 20px;
+}
+
+.form-card-title {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink2);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+.form-card-title::after { content:''; flex:1; height:1px; background:var(--border2); }
+
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+
+label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink2);
+  margin-bottom: 5px;
+}
+
+input[type="date"], input[type="text"], textarea, select {
+  width: 100%;
+  font-family: var(--body);
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 8px 11px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  appearance: none;
+  line-height: 1.5;
+}
+input:focus, textarea:focus { border-color: var(--teal-m); box-shadow: 0 0 0 3px rgba(29,158,117,0.1); }
+textarea { resize: vertical; min-height: 80px; }
+
+.territorio-group { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.territorio-tag {
+  font-family: var(--sans);
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.territorio-tag:hover { border-color: var(--teal-m); color: var(--teal); }
+.territorio-tag.sel { background: var(--teal-l); border-color: var(--teal-m); color: var(--teal); font-weight: 500; }
+
+.upload-zone {
+  border: 1px dashed var(--border);
+  border-radius: var(--r-sm);
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--bg);
+  position: relative;
+}
+.upload-zone:hover { border-color: var(--teal-m); background: var(--teal-l); }
+.upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-icon { font-size: 16px; color: var(--ink3); margin-bottom: 3px; }
+.upload-lbl { font-family: var(--sans); font-size: 12px; color: var(--ink2); }
+.upload-sub { font-size: 11px; color: var(--ink3); margin-top: 2px; }
+
+.preview-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+.prev-item {
+  width: 70px; height: 70px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  position: relative;
+  background: var(--bg2);
+  flex-shrink: 0;
+}
+.prev-item img { width: 100%; height: 100%; object-fit: cover; }
+.prev-item .rm {
+  position: absolute; top: 3px; right: 3px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: rgba(28,26,23,0.65);
+  color: #fff; border: none; cursor: pointer;
+  font-size: 9px;
+  display: flex; align-items: center; justify-content: center;
+}
+.prev-item .flabel {
+  font-size: 9px; color: var(--ink2);
+  text-align: center; padding: 6px 4px;
+  word-break: break-all; line-height: 1.3;
+  height: 100%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.relacoes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.relacao-bloco {
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: var(--r-sm);
+  padding: 10px 12px;
+}
+
+.relacao-bloco-title {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add-item-btn {
+  font-family: var(--sans);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--ink3);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.add-item-btn:hover { border-color: var(--teal-m); color: var(--teal); }
+
+.relacao-items { display: flex; flex-direction: column; gap: 5px; }
+
+.relacao-item { display: flex; gap: 5px; align-items: center; }
+.relacao-item input { flex: 1; font-size: 12px; padding: 5px 8px; }
+.relacao-item .rm-item {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--ink3);
+  cursor: pointer;
+  font-size: 11px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.12s;
+  font-family: var(--sans);
+}
+.relacao-item .rm-item:hover { border-color: var(--coral); color: var(--coral); background: var(--coral-l); }
+
+.status-group { display: flex; gap: 6px; }
+.status-opt {
+  font-family: var(--sans);
+  font-size: 11px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.status-opt:hover { background: var(--bg2); }
+.status-opt.sel-rascunho { background: var(--amber-l); border-color: var(--amber); color: var(--amber); }
+.status-opt.sel-completa { background: var(--teal-l); border-color: var(--teal-m); color: var(--teal); }
+
+.action-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--border2);
+}
+
+.btn-primary {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 9px 20px;
+  border-radius: 20px;
+  border: none;
+  background: var(--ink);
+  color: var(--bg);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-primary:hover { background: #2e2b26; transform: translateY(-1px); }
+.btn-primary:disabled { opacity: 0.5; cursor: default; transform: none; }
+
+.btn-ghost {
+  font-family: var(--sans);
+  font-size: 12px;
+  padding: 9px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.btn-ghost:hover { background: var(--bg2); }
+
+.btn-danger {
+  font-family: var(--sans);
+  font-size: 12px;
+  padding: 9px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(153,60,29,0.25);
+  background: transparent;
+  color: var(--coral);
+  cursor: pointer;
+  transition: all 0.12s;
+  margin-left: auto;
+}
+.btn-danger:hover { background: var(--coral-l); }
+
+/* ── ARQUIVO ── */
+.arquivo-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-chip {
+  font-family: var(--sans);
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.filter-chip:hover { border-color: var(--purple); color: var(--purple); }
+.filter-chip.active { background: var(--purple-l); border-color: var(--purple); color: var(--purple); font-weight: 500; }
+
+.laminas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+}
+
+.lamina-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.lamina-card:hover { border-color: var(--purple); box-shadow: 0 4px 16px rgba(83,74,183,0.1); transform: translateY(-1px); }
+
+.lamina-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+.tag { font-family: var(--sans); font-size: 10px; padding: 2px 8px; border-radius: 10px; }
+.tag-teal { background: var(--teal-l); color: var(--teal); }
+.tag-amber { background: var(--amber-l); color: var(--amber); }
+.tag-green { background: #EAF3DE; color: #3B6D11; }
+.tag-date { color: var(--ink3); font-size: 10px; font-family: var(--sans); }
+
+.lamina-title {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.lamina-snippet {
+  font-size: 12px;
+  color: var(--ink3);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-style: italic;
+}
+
+.lamina-thumb { width: 100%; height: 90px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border2); }
+
+.lamina-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--sans);
+  font-size: 10px;
+  color: var(--ink3);
+}
+
+.empty-state { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--ink3); }
+.empty-state p { font-family: var(--sans); font-size: 14px; margin-bottom: 6px; color: var(--ink2); }
+.empty-state small { font-size: 12px; }
+
+/* ── DETALHE ── */
+.detalhe-sections { display: flex; flex-direction: column; gap: 10px; }
+.detalhe-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 16px 18px; }
+.detalhe-block-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  margin-bottom: 10px;
+}
+.detalhe-text { font-size: 13px; color: var(--ink); line-height: 1.75; white-space: pre-wrap; }
+.detalhe-media { display: flex; flex-wrap: wrap; gap: 8px; }
+.detalhe-media-item { width: 100px; height: 100px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border2); }
+.detalhe-media-item img { width: 100%; height: 100%; object-fit: cover; }
+.detalhe-relacoes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.detalhe-rel-bloco { background: var(--bg); border: 1px solid var(--border2); border-radius: var(--r-sm); padding: 10px 12px; }
+.detalhe-rel-titulo { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink3); margin-bottom: 8px; }
+.detalhe-rel-item { font-size: 12px; color: var(--ink); padding: 4px 0; border-bottom: 1px solid var(--border2); line-height: 1.4; }
+.detalhe-rel-item:last-child { border-bottom: none; }
+.detalhe-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--sans);
+  font-size: 12px;
+  padding: 9px 18px;
+  border-radius: 20px;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  z-index: 200;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── LOADING ── */
+.loading-overlay {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 100;
+}
+.loading-logo { font-family: sans-serif; font-size: 28px; font-weight: 900; letter-spacing: 0.12em; color: var(--ink); }
+.loading-text { font-family: var(--sans); font-size: 12px; color: var(--ink3); }
+.loading-bar { width: 120px; height: 2px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+.loading-bar-inner { height: 100%; background: var(--teal-m); border-radius: 2px; animation: loadbar 1.2s ease-in-out infinite; }
+@keyframes loadbar { 0%{width:0;margin-left:0} 50%{width:100%;margin-left:0} 100%{width:0;margin-left:100%} }
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div class="loading-overlay" id="loading">
+  <div class="loading-logo">DIAGRAMOGRAMA</div>
+  <div class="loading-bar"><div class="loading-bar-inner"></div></div>
+  <div class="loading-text" id="loading-text">carregando...</div>
+</div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="logo">DIAGRAMOGRAMA</div>
+  <div class="topbar-sep"></div>
+  <nav class="topbar-nav" id="topbar-nav">
+    <button class="topbar-btn active" id="nav-nova" onclick="showView('nova',this)" disabled>+ nova lâmina</button>
+    <button class="topbar-btn" id="nav-arquivo" onclick="showView('arquivo',this)" disabled>arquivo</button>
+  </nav>
+  <div class="topbar-right">
+    <span class="lamina-counter" id="top-counter"></span>
+    <div class="sync-status" id="sync-status" style="display:none;">
+      <div class="sync-dot" id="sync-dot"></div>
+      <span id="sync-label">Drive</span>
+    </div>
+    <div id="auth-area"></div>
+  </div>
+</div>
+
+<!-- Login screen -->
+<div class="login-screen" id="login-screen" style="display:none;">
+  <div class="login-logo">DIAGRAMOGRAMA</div>
+  <div class="login-sub">plataforma de inscrição e organização diagramográfica — módulo 1</div>
+  <div class="login-card">
+    <h2>Entrar com Google</h2>
+    <p>Os dados das suas lâminas serão salvos no seu Google Drive, numa pasta chamada <strong>Diagramograma</strong>.</p>
+    <button class="btn-google" onclick="iniciarLogin()">
+      <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Continuar com Google
+    </button>
+  </div>
+</div>
+
+<!-- App body -->
+<div class="app-body" id="app-body">
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">territórios</div>
+      <button class="sidebar-item active" onclick="filtrarSidebar(this,'todos')">Todas as lâminas <span class="sidebar-badge" id="sb-todos">0</span></button>
+      <button class="sidebar-item" onclick="filtrarSidebar(this,'Vergel do Lago')">Vergel do Lago <span class="sidebar-badge" id="sb-vergel">0</span></button>
+      <button class="sidebar-item" onclick="filtrarSidebar(this,'Pontal da Barra')">Pontal da Barra <span class="sidebar-badge" id="sb-pontal">0</span></button>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">status</div>
+      <button class="sidebar-item" onclick="filtrarSidebar(this,'rascunho')">Rascunhos <span class="sidebar-badge" id="sb-rascunho">0</span></button>
+      <button class="sidebar-item" onclick="filtrarSidebar(this,'completa')">Completas <span class="sidebar-badge" id="sb-completa">0</span></button>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- NOVA LÂMINA -->
+    <div class="view active" id="view-nova">
+      <div class="page-header">
+        <div>
+          <div class="page-title" id="form-page-title">Nova lâmina</div>
+          <div class="page-subtitle">cada lâmina é um recorte temporal de um campo — inscrição datada e localizada</div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card-title">Identificação</div>
+        <div class="field-row">
+          <div><label>Data do campo</label><input type="date" id="f-data"></div>
+          <div><label>Título da lâmina</label><input type="text" id="f-titulo" placeholder="ex: primeira manhã no Vergel"></div>
+        </div>
+        <div>
+          <label>Território</label>
+          <div class="territorio-group">
+            <button class="territorio-tag" onclick="selTerritorio(this,'Vergel do Lago')">Vergel do Lago</button>
+            <button class="territorio-tag" onclick="selTerritorio(this,'Pontal da Barra')">Pontal da Barra</button>
+            <button class="territorio-tag" onclick="selTerritorio(this,'Ambos')">Ambos</button>
+            <button class="territorio-tag" onclick="selTerritorio(this,'Outro')">Outro</button>
+          </div>
+          <input type="text" id="f-outro-territorio" placeholder="especifique" style="margin-top:8px;display:none;">
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card-title">Materiais visuais</div>
+        <div class="upload-zone">
+          <input type="file" id="f-files" multiple accept="image/*,.pdf" onchange="handleFiles(this.files)">
+          <div class="upload-icon">↑</div>
+          <div class="upload-lbl">fotografias e digitalizações</div>
+          <div class="upload-sub">jpg, png, pdf — arraste ou clique</div>
+        </div>
+        <div class="preview-grid" id="preview-grid"></div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card-title">Registros escritos</div>
+        <div style="margin-bottom:12px;">
+          <label>Relato de campo</label>
+          <textarea id="f-relato" placeholder="narrativa do que foi observado, descrições do território, conversas..."></textarea>
+        </div>
+        <div>
+          <label>Registro afetivo</label>
+          <textarea id="f-afeto" placeholder="estados do corpo-pesquisador, afetações, tensões, o que o campo produziu em você..." style="min-height:68px;"></textarea>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card-title">Relações observadas</div>
+        <div class="relacoes-grid">
+          <div class="relacao-bloco">
+            <div class="relacao-bloco-title">Atores <button class="add-item-btn" onclick="addRelacaoItem('rel-atores')">+ adicionar</button></div>
+            <div class="relacao-items" id="rel-atores"></div>
+          </div>
+          <div class="relacao-bloco">
+            <div class="relacao-bloco-title">Práticas <button class="add-item-btn" onclick="addRelacaoItem('rel-praticas')">+ adicionar</button></div>
+            <div class="relacao-items" id="rel-praticas"></div>
+          </div>
+          <div class="relacao-bloco">
+            <div class="relacao-bloco-title">Espaços de acontecimento <button class="add-item-btn" onclick="addRelacaoItem('rel-espacos')">+ adicionar</button></div>
+            <div class="relacao-items" id="rel-espacos"></div>
+          </div>
+          <div class="relacao-bloco">
+            <div class="relacao-bloco-title">Tensões e ausências <button class="add-item-btn" onclick="addRelacaoItem('rel-tensoes')">+ adicionar</button></div>
+            <div class="relacao-items" id="rel-tensoes"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card-title">Status da lâmina</div>
+        <div class="status-group">
+          <button class="status-opt sel-rascunho" id="btn-rascunho" onclick="setStatus('rascunho')">rascunho — campo em aberto</button>
+          <button class="status-opt" id="btn-completa" onclick="setStatus('completa')">completa — pronta para sobreposição</button>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn-primary" id="btn-salvar" onclick="salvarLamina()">Salvar lâmina</button>
+        <button class="btn-ghost" onclick="limparForm()">Limpar</button>
+      </div>
+    </div>
+
+    <!-- ARQUIVO -->
+    <div class="view" id="view-arquivo">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Arquivo de lâminas</div>
+          <div class="page-subtitle" id="arquivo-subtitle">todas as lâminas</div>
+        </div>
+        <div class="cards-grid" style="grid-template-columns:repeat(3,110px);">
+          <div class="card"><div class="card-label">Total</div><div class="card-value" id="stat-total">0</div></div>
+          <div class="card"><div class="card-label">Rascunhos</div><div class="card-value" id="stat-rascunho" style="color:var(--amber)">0</div></div>
+          <div class="card"><div class="card-label">Completas</div><div class="card-value" id="stat-completa" style="color:var(--teal)">0</div></div>
+        </div>
+      </div>
+      <div class="arquivo-filters">
+        <button class="filter-chip active" onclick="filtrar(this,'todos')">todas</button>
+        <button class="filter-chip" onclick="filtrar(this,'Vergel do Lago')">Vergel do Lago</button>
+        <button class="filter-chip" onclick="filtrar(this,'Pontal da Barra')">Pontal da Barra</button>
+        <button class="filter-chip" onclick="filtrar(this,'rascunho')">rascunhos</button>
+        <button class="filter-chip" onclick="filtrar(this,'completa')">completas</button>
+      </div>
+      <div class="laminas-grid" id="laminas-grid"></div>
+    </div>
+
+    <!-- DETALHE -->
+    <div class="view" id="view-detalhe">
+      <div class="page-header">
+        <div>
+          <button class="btn-ghost" onclick="showView('arquivo',document.getElementById('nav-arquivo'));renderArquivo()" style="margin-bottom:10px;">← voltar ao arquivo</button>
+          <div class="page-title" id="det-titulo"></div>
+          <div class="detalhe-meta" id="det-meta" style="margin-top:8px;"></div>
+        </div>
+      </div>
+      <div class="detalhe-sections" id="det-sections"></div>
+      <div class="action-bar" style="margin-top:8px;">
+        <button class="btn-ghost" onclick="editarLamina()">Editar lâmina</button>
+        <button class="btn-danger" onclick="excluirLamina()">Excluir lâmina</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIG ──
+const CLIENT_ID = '845964039614-0qi4eoipeblglshnfql7ldfn3gugbu31.apps.googleusercontent.com';
+const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+const FOLDER_NAME = 'Diagramograma';
+const FILE_NAME = 'laminas.json';
+
+// ── STATE ──
+let laminas = [];
+let uploadedFiles = [];
+let currentStatus = 'rascunho';
+let currentFilter = 'todos';
+let currentDetalheId = null;
+let editandoId = null;
+let tokenClient = null;
+let accessToken = null;
+let folderId = null;
+let fileId = null;
+let isSaving = false;
+
+// ── INIT ──
+window.onload = () => {
+  setLoading('iniciando...');
+  // init GIS
+  try {
+    tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: CLIENT_ID,
+      scope: SCOPES,
+      callback: onTokenReceived,
+    });
+  } catch(e) {
+    console.error('GIS init error', e);
+  }
+
+  // check saved token
+  const saved = sessionStorage.getItem('dgm_token');
+  if (saved) {
+    accessToken = saved;
+    initApp();
+  } else {
+    hideLoading();
+    showLoginScreen();
+  }
+};
+
+function setLoading(msg) {
+  document.getElementById('loading').style.display = 'flex';
+  document.getElementById('loading-text').textContent = msg;
+}
+
+function hideLoading() {
+  document.getElementById('loading').style.display = 'none';
+}
+
+function showLoginScreen() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app-body').classList.remove('visible');
+}
+
+function iniciarLogin() {
+  tokenClient.requestAccessToken({ prompt: 'consent' });
+}
+
+function onTokenReceived(resp) {
+  if (resp.error) { showToast('erro ao autenticar'); return; }
+  accessToken = resp.access_token;
+  sessionStorage.setItem('dgm_token', accessToken);
+  document.getElementById('login-screen').style.display = 'none';
+  initApp();
+}
+
+async function initApp() {
+  setLoading('conectando ao Drive...');
+  try {
+    await ensureFolder();
+    setLoading('carregando lâminas...');
+    await carregarDrive();
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-body').classList.add('visible');
+    document.getElementById('nav-nova').disabled = false;
+    document.getElementById('nav-arquivo').disabled = false;
+    document.getElementById('sync-status').style.display = 'flex';
+    document.getElementById('auth-area').innerHTML = `<button class="btn-logout" onclick="logout()">sair</button>`;
+    setSyncStatus('ok', 'Drive sincronizado');
+    hideLoading();
+    updateStats();
+    updateSidebar();
+  } catch(e) {
+    console.error(e);
+    hideLoading();
+    if (e.status === 401) {
+      sessionStorage.removeItem('dgm_token');
+      showLoginScreen();
+    } else {
+      showToast('erro ao conectar ao Drive');
+      showLoginScreen();
+    }
+  }
+}
+
+function logout() {
+  google.accounts.oauth2.revoke(accessToken);
+  accessToken = null;
+  sessionStorage.removeItem('dgm_token');
+  laminas = [];
+  showLoginScreen();
+}
+
+// ── DRIVE API ──
+async function driveRequest(url, options = {}) {
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      ...(options.headers || {})
+    }
+  });
+  if (!res.ok) {
+    const err = new Error(`Drive API error: ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  return res;
+}
+
+async function ensureFolder() {
+  const res = await driveRequest(
+    `https://www.googleapis.com/drive/v3/files?q=name='${FOLDER_NAME}' and mimeType='application/vnd.google-apps.folder' and trashed=false&fields=files(id,name)`
+  );
+  const data = await res.json();
+  if (data.files && data.files.length > 0) {
+    folderId = data.files[0].id;
+  } else {
+    const cr = await driveRequest('https://www.googleapis.com/drive/v3/files', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: FOLDER_NAME, mimeType: 'application/vnd.google-apps.folder' })
+    });
+    const fd = await cr.json();
+    folderId = fd.id;
+  }
+}
+
+async function carregarDrive() {
+  const res = await driveRequest(
+    `https://www.googleapis.com/drive/v3/files?q=name='${FILE_NAME}' and '${folderId}' in parents and trashed=false&fields=files(id,name)`
+  );
+  const data = await res.json();
+  if (data.files && data.files.length > 0) {
+    fileId = data.files[0].id;
+    const content = await driveRequest(
+      `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`
+    );
+    laminas = await content.json();
+  } else {
+    laminas = [];
+    await salvarDrive();
+  }
+}
+
+async function salvarDrive() {
+  if (isSaving) return;
+  isSaving = true;
+  setSyncStatus('syncing', 'salvando...');
+  try {
+    const body = JSON.stringify(laminas);
+    if (fileId) {
+      await driveRequest(
+        `https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=media`,
+        { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body }
+      );
+    } else {
+      const meta = { name: FILE_NAME, parents: [folderId] };
+      const form = new FormData();
+      form.append('metadata', new Blob([JSON.stringify(meta)], { type: 'application/json' }));
+      form.append('file', new Blob([body], { type: 'application/json' }));
+      const res = await driveRequest(
+        'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',
+        { method: 'POST', body: form }
+      );
+      const d = await res.json();
+      fileId = d.id;
+    }
+    setSyncStatus('ok', 'Drive sincronizado');
+  } catch(e) {
+    console.error(e);
+    setSyncStatus('error', 'erro ao salvar');
+    showToast('erro ao salvar no Drive');
+  } finally {
+    isSaving = false;
+  }
+}
+
+function setSyncStatus(state, label) {
+  const dot = document.getElementById('sync-dot');
+  dot.className = 'sync-dot ' + state;
+  document.getElementById('sync-label').textContent = label;
+}
+
+// ── UI ──
+function showView(v, navBtn) {
+  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.topbar-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  if (navBtn) navBtn.classList.add('active');
+  if (v === 'arquivo') renderArquivo();
+  updateSidebar();
+}
+
+function selTerritorio(btn, val) {
+  document.querySelectorAll('.territorio-tag').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('f-outro-territorio').style.display = val === 'Outro' ? 'block' : 'none';
+}
+
+function setStatus(s) {
+  currentStatus = s;
+  document.getElementById('btn-rascunho').className = 'status-opt' + (s === 'rascunho' ? ' sel-rascunho' : '');
+  document.getElementById('btn-completa').className = 'status-opt' + (s === 'completa' ? ' sel-completa' : '');
+}
+
+function handleFiles(files) {
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      uploadedFiles.push({ name: file.name, type: file.type, data: e.target.result });
+      renderPreviews();
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderPreviews() {
+  document.getElementById('preview-grid').innerHTML = uploadedFiles.map((f, i) =>
+    f.type.startsWith('image/')
+      ? `<div class="prev-item"><img src="${f.data}"><button class="rm" onclick="removeFile(${i})">×</button></div>`
+      : `<div class="prev-item"><div class="flabel">${f.name}</div><button class="rm" onclick="removeFile(${i})">×</button></div>`
+  ).join('');
+}
+
+function removeFile(i) { uploadedFiles.splice(i, 1); renderPreviews(); }
+
+function addRelacaoItem(catId, value = '') {
+  const container = document.getElementById(catId);
+  const div = document.createElement('div');
+  div.className = 'relacao-item';
+  div.innerHTML = `<input type="text" placeholder="—" value="${value}"><button class="rm-item" onclick="this.parentElement.remove()">×</button>`;
+  container.appendChild(div);
+  div.querySelector('input').focus();
+}
+
+function getRelacoes(catId) {
+  return Array.from(document.getElementById(catId).querySelectorAll('input'))
+    .map(i => i.value.trim()).filter(Boolean);
+}
+
+function setRelacoes(catId, items) {
+  document.getElementById(catId).innerHTML = '';
+  (items || []).forEach(v => addRelacaoItem(catId, v));
+}
+
+async function salvarLamina() {
+  const data = document.getElementById('f-data').value;
+  const titulo = document.getElementById('f-titulo').value.trim();
+  const tSel = document.querySelector('.territorio-tag.sel');
+  const territorio = tSel
+    ? (tSel.textContent === 'Outro' ? document.getElementById('f-outro-territorio').value.trim() : tSel.textContent)
+    : '';
+
+  if (!data) { showToast('indique a data do campo'); return; }
+  if (!territorio) { showToast('selecione o território'); return; }
+
+  const lamina = {
+    id: editandoId || Date.now().toString(),
+    data, titulo: titulo || `campo — ${data}`,
+    territorio,
+    relato: document.getElementById('f-relato').value.trim(),
+    afeto: document.getElementById('f-afeto').value.trim(),
+    relacoes: {
+      atores: getRelacoes('rel-atores'),
+      praticas: getRelacoes('rel-praticas'),
+      espacos: getRelacoes('rel-espacos'),
+      tensoes: getRelacoes('rel-tensoes')
+    },
+    status: currentStatus,
+    arquivos: uploadedFiles.map(f => ({ name: f.name, type: f.type, data: f.data })),
+    criadaEm: editandoId ? (laminas.find(l => l.id === editandoId)?.criadaEm || Date.now()) : Date.now(),
+    atualizadaEm: Date.now()
+  };
+
+  if (editandoId) {
+    const idx = laminas.findIndex(l => l.id === editandoId);
+    if (idx > -1) laminas[idx] = lamina;
+    editandoId = null;
+  } else {
+    laminas.unshift(lamina);
+  }
+
+  const btn = document.getElementById('btn-salvar');
+  btn.disabled = true;
+  btn.textContent = 'salvando...';
+
+  await salvarDrive();
+
+  btn.disabled = false;
+  btn.textContent = 'Salvar lâmina';
+  showToast('lâmina salva no Drive');
+  limparForm();
+  showView('arquivo', document.getElementById('nav-arquivo'));
+}
+
+function limparForm() {
+  ['f-data','f-titulo','f-relato','f-afeto'].forEach(id => { document.getElementById(id).value = ''; });
+  const outro = document.getElementById('f-outro-territorio');
+  outro.value = ''; outro.style.display = 'none';
+  document.querySelectorAll('.territorio-tag').forEach(b => b.classList.remove('sel'));
+  ['rel-atores','rel-praticas','rel-espacos','rel-tensoes'].forEach(c => document.getElementById(c).innerHTML = '');
+  uploadedFiles = [];
+  document.getElementById('preview-grid').innerHTML = '';
+  setStatus('rascunho');
+  editandoId = null;
+  document.getElementById('form-page-title').textContent = 'Nova lâmina';
+}
+
+function renderArquivo() {
+  updateStats();
+  const grid = document.getElementById('laminas-grid');
+  let filtered = laminas;
+  if (currentFilter !== 'todos') {
+    if (currentFilter === 'rascunho' || currentFilter === 'completa') {
+      filtered = laminas.filter(l => l.status === currentFilter);
+    } else {
+      filtered = laminas.filter(l => l.territorio === currentFilter);
+    }
+  }
+  const subs = { todos:'todas as lâminas', rascunho:'rascunhos', completa:'lâminas completas' };
+  document.getElementById('arquivo-subtitle').textContent = subs[currentFilter] || currentFilter;
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="empty-state"><p>nenhuma lâmina aqui ainda</p><small>crie uma nova lâmina para começar</small></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(l => {
+    const thumb = l.arquivos?.find(f => f.type?.startsWith('image/'));
+    const thumbHtml = thumb ? `<img class="lamina-thumb" src="${thumb.data}" alt="">` : '';
+    const snippet = l.relato || l.afeto || '';
+    const totalRel = Object.values(l.relacoes || {}).flat().length;
+    const statusTag = l.status === 'rascunho'
+      ? `<span class="tag tag-amber">rascunho</span>`
+      : `<span class="tag tag-green">completa</span>`;
+    return `<div class="lamina-card" onclick="verDetalhe('${l.id}')">
+      ${thumbHtml}
+      <div class="lamina-meta">
+        <span class="tag-date">${l.data}</span>
+        <span class="tag tag-teal">${l.territorio}</span>
+        ${statusTag}
+      </div>
+      <div class="lamina-title">${l.titulo}</div>
+      ${snippet ? `<div class="lamina-snippet">${snippet.substring(0,110)}${snippet.length>110?'...':''}</div>` : ''}
+      <div class="lamina-foot">
+        <span>${totalRel} relação${totalRel!==1?'ões':''} observada${totalRel!==1?'s':''}</span>
+        <span>${l.arquivos?.length||0} arquivo${(l.arquivos?.length||0)!==1?'s':''}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filtrar(btn, val) {
+  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = val;
+  renderArquivo();
+}
+
+function filtrarSidebar(btn, val) {
+  document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = val;
+  showView('arquivo', document.getElementById('nav-arquivo'));
+  document.querySelectorAll('.filter-chip').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('onclick')?.includes(`'${val}'`));
+  });
+}
+
+function verDetalhe(id) {
+  const l = laminas.find(l => l.id === id);
+  if (!l) return;
+  currentDetalheId = id;
+  document.getElementById('det-titulo').textContent = l.titulo;
+  const statusTag = l.status === 'rascunho'
+    ? `<span class="tag tag-amber">rascunho</span>`
+    : `<span class="tag tag-green">completa</span>`;
+  document.getElementById('det-meta').innerHTML = `
+    <span class="tag-date" style="font-size:12px;color:var(--ink2)">${l.data}</span>
+    <span class="tag tag-teal">${l.territorio}</span>${statusTag}`;
+
+  const secs = [];
+  if (l.arquivos?.length) {
+    const media = l.arquivos.map(f =>
+      f.type?.startsWith('image/')
+        ? `<div class="detalhe-media-item"><img src="${f.data}"></div>`
+        : `<div class="detalhe-media-item" style="display:flex;align-items:center;justify-content:center;background:var(--bg2);font-size:10px;padding:8px;text-align:center;">${f.name}</div>`
+    ).join('');
+    secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Materiais visuais (${l.arquivos.length})</div><div class="detalhe-media">${media}</div></div>`);
+  }
+  if (l.relato) secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Relato de campo</div><div class="detalhe-text">${l.relato}</div></div>`);
+  if (l.afeto) secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Registro afetivo</div><div class="detalhe-text">${l.afeto}</div></div>`);
+  const rel = l.relacoes || {};
+  const hasRel = Object.values(rel).some(a => a?.length);
+  if (hasRel) {
+    const blocos = [
+      ['Atores', rel.atores], ['Práticas', rel.praticas],
+      ['Espaços de acontecimento', rel.espacos], ['Tensões e ausências', rel.tensoes]
+    ].map(([t, items]) =>
+      `<div class="detalhe-rel-bloco"><div class="detalhe-rel-titulo">${t}</div>${
+        (items?.length ? items : ['—']).map(i => `<div class="detalhe-rel-item">${i}</div>`).join('')
+      }</div>`
+    ).join('');
+    secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Relações observadas</div><div class="detalhe-relacoes">${blocos}</div></div>`);
+  }
+  document.getElementById('det-sections').innerHTML = secs.join('');
+  showView('detalhe');
+  document.querySelectorAll('.topbar-btn').forEach(b => b.classList.remove('active'));
+}
+
+function editarLamina() {
+  const l = laminas.find(l => l.id === currentDetalheId);
+  if (!l) return;
+  editandoId = l.id;
+  document.getElementById('f-data').value = l.data;
+  document.getElementById('f-titulo').value = l.titulo;
+  document.getElementById('f-relato').value = l.relato || '';
+  document.getElementById('f-afeto').value = l.afeto || '';
+  uploadedFiles = l.arquivos ? [...l.arquivos] : [];
+  renderPreviews();
+  setStatus(l.status || 'rascunho');
+  document.querySelectorAll('.territorio-tag').forEach(b => {
+    if (b.textContent.trim() === l.territorio) b.classList.add('sel');
+  });
+  const rel = l.relacoes || {};
+  setRelacoes('rel-atores', rel.atores);
+  setRelacoes('rel-praticas', rel.praticas);
+  setRelacoes('rel-espacos', rel.espacos);
+  setRelacoes('rel-tensoes', rel.tensoes);
+  document.getElementById('form-page-title').textContent = 'Editar lâmina';
+  showView('nova', document.getElementById('nav-nova'));
+}
+
+async function excluirLamina() {
+  if (!confirm('Excluir esta lâmina? A ação não pode ser desfeita.')) return;
+  laminas = laminas.filter(l => l.id !== currentDetalheId);
+  await salvarDrive();
+  showToast('lâmina excluída');
+  showView('arquivo', document.getElementById('nav-arquivo'));
+}
+
+function updateStats() {
+  const total = laminas.length;
+  const rasc = laminas.filter(l => l.status === 'rascunho').length;
+  const comp = laminas.filter(l => l.status === 'completa').length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-rascunho').textContent = rasc;
+  document.getElementById('stat-completa').textContent = comp;
+  document.getElementById('top-counter').textContent = `${total} lâmina${total!==1?'s':''}`;
+}
+
+function updateSidebar() {
+  document.getElementById('sb-todos').textContent = laminas.length;
+  document.getElementById('sb-vergel').textContent = laminas.filter(l => l.territorio === 'Vergel do Lago').length;
+  document.getElementById('sb-pontal').textContent = laminas.filter(l => l.territorio === 'Pontal da Barra').length;
+  document.getElementById('sb-rascunho').textContent = laminas.filter(l => l.status === 'rascunho').length;
+  document.getElementById('sb-completa').textContent = laminas.filter(l => l.status === 'completa').length;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2400);
+}
+</script>
+</body>
+</html>
