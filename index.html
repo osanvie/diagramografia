@@ -4,750 +4,255 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DIAGRAMOGRAMA</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Figtree:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Figtree:ital,wght@0,300;0,400;0,500;1,300&family=Boldonse&display=swap" rel="stylesheet">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --bg: #F0EDE6;
-  --bg2: #E8E4DB;
-  --bg3: #DEDAD0;
-  --surface: #FAF9F6;
-  --ink: #1C1A17;
-  --ink2: #4A4740;
-  --ink3: #9A9590;
-  --teal: #0F6E56;
-  --teal-l: #E1F5EE;
-  --teal-m: #1D9E75;
-  --purple: #534AB7;
-  --purple-l: #EEEDFE;
-  --coral: #993C1D;
-  --coral-l: #FAECE7;
-  --amber: #854F0B;
-  --amber-l: #FAEEDA;
-  --border: rgba(28,26,23,0.10);
-  --border2: rgba(28,26,23,0.06);
-  --r: 12px;
-  --r-sm: 8px;
-  --sans: 'Space Grotesk', sans-serif;
-  --body: 'Figtree', sans-serif;
-  --sidebar: 220px;
-  --topbar: 56px;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F0EDE6;--bg2:#E8E4DB;--bg3:#DEDAD0;--surface:#FAF9F6;
+  --ink:#1C1A17;--ink2:#4A4740;--ink3:#9A9590;
+  --teal:#0F6E56;--teal-l:#E1F5EE;--teal-m:#1D9E75;
+  --purple:#534AB7;--purple-l:#EEEDFE;
+  --coral:#993C1D;--coral-l:#FAECE7;
+  --amber:#854F0B;--amber-l:#FAEEDA;
+  --red:#A32D2D;--red-l:#FCEBEB;
+  --blue:#185FA5;--blue-l:#E6F1FB;
+  --border:rgba(28,26,23,0.10);--border2:rgba(28,26,23,0.06);
+  --r:12px;--rsm:8px;
+  --display:'Boldonse',sans-serif;
+  --sans:'Space Grotesk',sans-serif;
+  --body:'Figtree',sans-serif;
+  --sidebar:220px;--topbar:56px;
 }
-
-html, body { height: 100%; }
-body {
-  font-family: var(--body);
-  background: var(--bg);
-  color: var(--ink);
-  font-size: 13px;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* ── TOPBAR ── */
-.topbar {
-  height: var(--topbar);
-  background: var(--ink);
-  display: flex;
-  align-items: center;
-  padding: 0 24px;
-  gap: 20px;
-  flex-shrink: 0;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-}
-
-.logo {
-  font-family: sans-serif;
-  font-size: 17px;
-  font-weight: 900;
-  color: var(--bg);
-  letter-spacing: 0.12em;
-  flex-shrink: 0;
-}
-
-.topbar-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.15); }
-
-.topbar-nav { display: flex; gap: 2px; flex: 1; }
-
-.topbar-btn {
-  font-family: var(--sans);
-  font-size: 12px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: rgba(255,255,255,0.5);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.topbar-btn:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.08); }
-.topbar-btn.active { color: var(--bg); background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.2); }
-.topbar-btn:disabled { opacity: 0.3; cursor: default; }
-
-.topbar-right { display: flex; gap: 8px; align-items: center; }
-
-.lamina-counter {
-  font-family: var(--sans);
-  font-size: 11px;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 0.04em;
-}
-
-.sync-status {
-  font-family: var(--sans);
-  font-size: 11px;
-  color: rgba(255,255,255,0.4);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.sync-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  transition: background 0.3s;
-}
-.sync-dot.ok { background: #4ade80; }
-.sync-dot.syncing { background: #fbbf24; animation: pulse 1s infinite; }
-.sync-dot.error { background: #f87171; }
-
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
-.btn-login {
-  font-family: var(--sans);
-  font-size: 11px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.25);
-  background: transparent;
-  color: rgba(255,255,255,0.8);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-login:hover { background: rgba(255,255,255,0.1); }
-
-.btn-logout {
-  font-family: var(--sans);
-  font-size: 11px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: transparent;
-  color: rgba(255,255,255,0.4);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-logout:hover { color: rgba(255,255,255,0.7); }
-
-/* ── LOGIN SCREEN ── */
-.login-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  gap: 20px;
-  padding: 40px;
-}
-
-.login-logo {
-  font-family: sans-serif;
-  font-size: 36px;
-  font-weight: 900;
-  color: var(--ink);
-  letter-spacing: 0.12em;
-  margin-bottom: 8px;
-}
-
-.login-sub {
-  font-family: var(--body);
-  font-size: 13px;
-  color: var(--ink3);
-  font-style: italic;
-  text-align: center;
-  max-width: 340px;
-  line-height: 1.6;
-  margin-bottom: 12px;
-}
-
-.login-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 28px 32px;
-  text-align: center;
-  max-width: 380px;
-  width: 100%;
-}
-
-.login-card h2 {
-  font-family: var(--sans);
-  font-size: 16px;
-  font-weight: 500;
-  color: var(--ink);
-  margin-bottom: 8px;
-}
-
-.login-card p {
-  font-size: 12px;
-  color: var(--ink3);
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.btn-google {
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 500;
-  padding: 11px 22px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--ink);
-  cursor: pointer;
-  transition: all 0.15s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  width: 100%;
-  justify-content: center;
-}
-.btn-google:hover { background: var(--bg2); border-color: var(--ink3); }
-
-.google-icon {
-  width: 16px; height: 16px;
-}
-
-/* ── LAYOUT ── */
-.app-body {
-  display: none;
-  flex: 1;
-  overflow: hidden;
-  height: calc(100vh - var(--topbar));
-}
-.app-body.visible { display: flex; }
-
-/* ── SIDEBAR ── */
-.sidebar {
-  width: var(--sidebar);
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  overflow-y: auto;
-  padding: 16px 0;
-}
-
-.sidebar-section { padding: 0 12px; margin-bottom: 24px; }
-
-.sidebar-label {
-  font-family: var(--sans);
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  padding: 0 8px;
-  margin-bottom: 6px;
-}
-
-.sidebar-item {
-  font-family: var(--sans);
-  font-size: 12px;
-  padding: 7px 10px;
-  border-radius: var(--r-sm);
-  cursor: pointer;
-  color: var(--ink2);
-  transition: all 0.12s;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  border: none;
-  background: transparent;
-  width: 100%;
-  text-align: left;
-}
-.sidebar-item:hover { background: var(--bg2); color: var(--ink); }
-.sidebar-item.active { background: var(--bg3); color: var(--ink); font-weight: 500; }
-
-.sidebar-badge {
-  font-size: 10px;
-  background: var(--bg3);
-  color: var(--ink3);
-  padding: 1px 6px;
-  border-radius: 10px;
-}
-
-.sidebar-divider { height: 1px; background: var(--border2); margin: 8px 12px; }
-
-/* ── MAIN ── */
-.main {
-  flex: 1;
-  overflow-y: auto;
-  padding: 28px 32px;
-  display: flex;
-  flex-direction: column;
-}
-
-/* ── VIEWS ── */
-.view { display: none; width: 100%; flex-direction: column; gap: 20px; }
-.view.active { display: flex; }
-
-/* ── PAGE HEADER ── */
-.page-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border);
-}
-
-.page-title {
-  font-family: var(--sans);
-  font-size: 22px;
-  font-weight: 500;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-}
-
-.page-subtitle {
-  font-size: 12px;
-  color: var(--ink3);
-  margin-top: 4px;
-  font-style: italic;
-}
-
-/* ── STATS ── */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 14px 16px;
-}
-
-.card-label {
-  font-family: var(--sans);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  margin-bottom: 6px;
-}
-
-.card-value {
-  font-family: var(--sans);
-  font-size: 26px;
-  font-weight: 600;
-  color: var(--ink);
-  letter-spacing: -0.03em;
-}
-
-/* ── FORM ── */
-.form-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 18px 20px;
-}
-
-.form-card-title {
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ink2);
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  font-size: 10px;
-}
-.form-card-title::after { content:''; flex:1; height:1px; background:var(--border2); }
-
-.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
-
-label {
-  display: block;
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--ink2);
-  margin-bottom: 5px;
-}
-
-input[type="date"], input[type="text"], textarea, select {
-  width: 100%;
-  font-family: var(--body);
-  font-size: 13px;
-  color: var(--ink);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  padding: 8px 11px;
-  outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  appearance: none;
-  line-height: 1.5;
-}
-input:focus, textarea:focus { border-color: var(--teal-m); box-shadow: 0 0 0 3px rgba(29,158,117,0.1); }
-textarea { resize: vertical; min-height: 80px; }
-
-.territorio-group { display: flex; gap: 6px; flex-wrap: wrap; }
-
-.territorio-tag {
-  font-family: var(--sans);
-  font-size: 11px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--ink2);
-  cursor: pointer;
-  transition: all 0.12s;
-}
-.territorio-tag:hover { border-color: var(--teal-m); color: var(--teal); }
-.territorio-tag.sel { background: var(--teal-l); border-color: var(--teal-m); color: var(--teal); font-weight: 500; }
-
-.upload-zone {
-  border: 1px dashed var(--border);
-  border-radius: var(--r-sm);
-  padding: 16px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.15s;
-  background: var(--bg);
-  position: relative;
-}
-.upload-zone:hover { border-color: var(--teal-m); background: var(--teal-l); }
-.upload-zone input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
-.upload-icon { font-size: 16px; color: var(--ink3); margin-bottom: 3px; }
-.upload-lbl { font-family: var(--sans); font-size: 12px; color: var(--ink2); }
-.upload-sub { font-size: 11px; color: var(--ink3); margin-top: 2px; }
-
-.preview-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-
-.prev-item {
-  width: 70px; height: 70px;
-  border-radius: 6px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  position: relative;
-  background: var(--bg2);
-  flex-shrink: 0;
-}
-.prev-item img { width: 100%; height: 100%; object-fit: cover; }
-.prev-item .rm {
-  position: absolute; top: 3px; right: 3px;
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  background: rgba(28,26,23,0.65);
-  color: #fff; border: none; cursor: pointer;
-  font-size: 9px;
-  display: flex; align-items: center; justify-content: center;
-}
-.prev-item .flabel {
-  font-size: 9px; color: var(--ink2);
-  text-align: center; padding: 6px 4px;
-  word-break: break-all; line-height: 1.3;
-  height: 100%;
-  display: flex; align-items: center; justify-content: center;
-}
-
-.relacoes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-.relacao-bloco {
-  background: var(--bg);
-  border: 1px solid var(--border2);
-  border-radius: var(--r-sm);
-  padding: 10px 12px;
-}
-
-.relacao-bloco-title {
-  font-family: var(--sans);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.add-item-btn {
-  font-family: var(--sans);
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--ink3);
-  cursor: pointer;
-  transition: all 0.12s;
-}
-.add-item-btn:hover { border-color: var(--teal-m); color: var(--teal); }
-
-.relacao-items { display: flex; flex-direction: column; gap: 5px; }
-
-.relacao-item { display: flex; gap: 5px; align-items: center; }
-.relacao-item input { flex: 1; font-size: 12px; padding: 5px 8px; }
-.relacao-item .rm-item {
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--ink3);
-  cursor: pointer;
-  font-size: 11px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.12s;
-  font-family: var(--sans);
-}
-.relacao-item .rm-item:hover { border-color: var(--coral); color: var(--coral); background: var(--coral-l); }
-
-.status-group { display: flex; gap: 6px; }
-.status-opt {
-  font-family: var(--sans);
-  font-size: 11px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--ink2);
-  cursor: pointer;
-  transition: all 0.12s;
-}
-.status-opt:hover { background: var(--bg2); }
-.status-opt.sel-rascunho { background: var(--amber-l); border-color: var(--amber); color: var(--amber); }
-.status-opt.sel-completa { background: var(--teal-l); border-color: var(--teal-m); color: var(--teal); }
-
-.action-bar {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  padding-top: 16px;
-  border-top: 1px solid var(--border2);
-}
-
-.btn-primary {
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 9px 20px;
-  border-radius: 20px;
-  border: none;
-  background: var(--ink);
-  color: var(--bg);
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-primary:hover { background: #2e2b26; transform: translateY(-1px); }
-.btn-primary:disabled { opacity: 0.5; cursor: default; transform: none; }
-
-.btn-ghost {
-  font-family: var(--sans);
-  font-size: 12px;
-  padding: 9px 18px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--ink2);
-  cursor: pointer;
-  transition: all 0.12s;
-}
-.btn-ghost:hover { background: var(--bg2); }
-
-.btn-danger {
-  font-family: var(--sans);
-  font-size: 12px;
-  padding: 9px 18px;
-  border-radius: 20px;
-  border: 1px solid rgba(153,60,29,0.25);
-  background: transparent;
-  color: var(--coral);
-  cursor: pointer;
-  transition: all 0.12s;
-  margin-left: auto;
-}
-.btn-danger:hover { background: var(--coral-l); }
-
-/* ── ARQUIVO ── */
-.arquivo-filters { display: flex; gap: 6px; flex-wrap: wrap; }
-.filter-chip {
-  font-family: var(--sans);
-  font-size: 11px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--ink2);
-  cursor: pointer;
-  transition: all 0.12s;
-}
-.filter-chip:hover { border-color: var(--purple); color: var(--purple); }
-.filter-chip.active { background: var(--purple-l); border-color: var(--purple); color: var(--purple); font-weight: 500; }
-
-.laminas-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 10px;
-}
-
-.lamina-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 14px 16px;
-  cursor: pointer;
-  transition: all 0.15s;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.lamina-card:hover { border-color: var(--purple); box-shadow: 0 4px 16px rgba(83,74,183,0.1); transform: translateY(-1px); }
-
-.lamina-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-
-.tag { font-family: var(--sans); font-size: 10px; padding: 2px 8px; border-radius: 10px; }
-.tag-teal { background: var(--teal-l); color: var(--teal); }
-.tag-amber { background: var(--amber-l); color: var(--amber); }
-.tag-green { background: #EAF3DE; color: #3B6D11; }
-.tag-date { color: var(--ink3); font-size: 10px; font-family: var(--sans); }
-
-.lamina-title {
-  font-family: var(--sans);
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-  line-height: 1.3;
-}
-
-.lamina-snippet {
-  font-size: 12px;
-  color: var(--ink3);
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  font-style: italic;
-}
-
-.lamina-thumb { width: 100%; height: 90px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border2); }
-
-.lamina-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--sans);
-  font-size: 10px;
-  color: var(--ink3);
-}
-
-.empty-state { grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--ink3); }
-.empty-state p { font-family: var(--sans); font-size: 14px; margin-bottom: 6px; color: var(--ink2); }
-.empty-state small { font-size: 12px; }
-
-/* ── DETALHE ── */
-.detalhe-sections { display: flex; flex-direction: column; gap: 10px; }
-.detalhe-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 16px 18px; }
-.detalhe-block-label {
-  font-family: var(--sans);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink3);
-  margin-bottom: 10px;
-}
-.detalhe-text { font-size: 13px; color: var(--ink); line-height: 1.75; white-space: pre-wrap; }
-.detalhe-media { display: flex; flex-wrap: wrap; gap: 8px; }
-.detalhe-media-item { width: 100px; height: 100px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border2); }
-.detalhe-media-item img { width: 100%; height: 100%; object-fit: cover; }
-.detalhe-relacoes { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.detalhe-rel-bloco { background: var(--bg); border: 1px solid var(--border2); border-radius: var(--r-sm); padding: 10px 12px; }
-.detalhe-rel-titulo { font-family: var(--sans); font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink3); margin-bottom: 8px; }
-.detalhe-rel-item { font-size: 12px; color: var(--ink); padding: 4px 0; border-bottom: 1px solid var(--border2); line-height: 1.4; }
-.detalhe-rel-item:last-child { border-bottom: none; }
-.detalhe-meta { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-
-/* ── TOAST ── */
-.toast {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: var(--ink);
-  color: var(--bg);
-  font-family: var(--sans);
-  font-size: 12px;
-  padding: 9px 18px;
-  border-radius: 20px;
-  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-  z-index: 200;
-  white-space: nowrap;
-  pointer-events: none;
-}
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-/* ── LOADING ── */
-.loading-overlay {
-  position: fixed; inset: 0;
-  background: var(--bg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  z-index: 100;
-}
-.loading-logo { font-family: sans-serif; font-size: 28px; font-weight: 900; letter-spacing: 0.12em; color: var(--ink); }
-.loading-text { font-family: var(--sans); font-size: 12px; color: var(--ink3); }
-.loading-bar { width: 120px; height: 2px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
-.loading-bar-inner { height: 100%; background: var(--teal-m); border-radius: 2px; animation: loadbar 1.2s ease-in-out infinite; }
-@keyframes loadbar { 0%{width:0;margin-left:0} 50%{width:100%;margin-left:0} 100%{width:0;margin-left:100%} }
+html,body{height:100%}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);font-size:13px;display:flex;flex-direction:column;min-height:100vh}
+
+/* TOPBAR */
+.topbar{height:var(--topbar);background:var(--ink);display:flex;align-items:center;padding:0 24px;gap:20px;flex-shrink:0;position:sticky;top:0;z-index:50}
+.logo{font-family:var(--display);font-size:18px;color:var(--bg);letter-spacing:0.06em;flex-shrink:0}
+.topbar-sep{width:1px;height:20px;background:rgba(255,255,255,0.15)}
+.topbar-nav{display:flex;gap:2px;flex:1}
+.topbar-btn{font-family:var(--sans);font-size:12px;padding:6px 14px;border-radius:20px;border:1px solid transparent;background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;transition:all .15s}
+.topbar-btn:hover{color:rgba(255,255,255,0.85);background:rgba(255,255,255,0.08)}
+.topbar-btn.active{color:var(--bg);background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.2)}
+.topbar-btn:disabled{opacity:0.3;cursor:default}
+.topbar-right{display:flex;gap:8px;align-items:center}
+.lamina-counter{font-family:var(--sans);font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:.04em}
+.sync-status{font-family:var(--sans);font-size:11px;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:5px}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.2);transition:background .3s}
+.sync-dot.ok{background:#4ade80}
+.sync-dot.syncing{background:#fbbf24;animation:pulse 1s infinite}
+.sync-dot.error{background:#f87171}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.btn-login{font-family:var(--sans);font-size:11px;padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.25);background:transparent;color:rgba(255,255,255,0.8);cursor:pointer;transition:all .15s}
+.btn-login:hover{background:rgba(255,255,255,0.1)}
+.btn-logout{font-family:var(--sans);font-size:11px;padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:rgba(255,255,255,0.4);cursor:pointer;transition:all .15s}
+.btn-logout:hover{color:rgba(255,255,255,0.7)}
+
+/* LOGIN */
+.login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:20px;padding:40px}
+.login-logo{font-family:var(--display);font-size:40px;color:var(--ink);letter-spacing:0.06em;margin-bottom:8px}
+.login-sub{font-family:var(--body);font-size:13px;color:var(--ink3);font-style:italic;text-align:center;max-width:340px;line-height:1.6;margin-bottom:12px}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px 32px;text-align:center;max-width:380px;width:100%}
+.login-card h2{font-family:var(--sans);font-size:16px;font-weight:500;color:var(--ink);margin-bottom:8px}
+.login-card p{font-family:var(--body);font-size:12px;color:var(--ink3);line-height:1.6;margin-bottom:20px}
+.btn-google{font-family:var(--sans);font-size:13px;font-weight:500;padding:11px 22px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:8px;width:100%;justify-content:center}
+.btn-google:hover{background:var(--bg2);border-color:var(--ink3)}
+
+/* LAYOUT */
+.app-body{display:none;flex:1;overflow:hidden;height:calc(100vh - var(--topbar))}
+.app-body.visible{display:flex}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto;padding:16px 0;transition:width .2s,padding .2s}
+.sidebar.collapsed{width:0;padding:0;overflow:hidden}
+.sidebar-section{padding:0 12px;margin-bottom:24px}
+.sidebar-label{font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);padding:0 8px;margin-bottom:6px;white-space:nowrap}
+.sidebar-item{font-family:var(--sans);font-size:12px;padding:7px 10px;border-radius:var(--rsm);cursor:pointer;color:var(--ink2);transition:all .12s;display:flex;align-items:center;justify-content:space-between;gap:6px;border:none;background:transparent;width:100%;text-align:left;white-space:nowrap}
+.sidebar-item:hover{background:var(--bg2);color:var(--ink)}
+.sidebar-item.active{background:var(--bg3);color:var(--ink);font-weight:500}
+.sidebar-badge{font-size:10px;background:var(--bg3);color:var(--ink3);padding:1px 6px;border-radius:10px}
+.sidebar-divider{height:1px;background:var(--border2);margin:8px 12px}
+.sidebar-toggle{position:absolute;top:50%;left:var(--sidebar);transform:translateY(-50%);width:20px;height:40px;background:var(--surface);border:1px solid var(--border);border-left:none;border-radius:0 6px 6px 0;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:left .2s;font-size:10px;color:var(--ink3)}
+.sidebar-toggle:hover{background:var(--bg2);color:var(--ink)}
+.sidebar-wrapper{position:relative;flex-shrink:0}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;padding:28px 32px;display:flex;flex-direction:column}
+.view{display:none;width:100%;flex-direction:column;gap:20px}
+.view.active{display:flex}
+
+/* PAGE HEADER */
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.page-title{font-family:var(--sans);font-size:22px;font-weight:500;color:var(--ink);letter-spacing:-0.02em}
+.page-subtitle{font-family:var(--body);font-size:12px;color:var(--ink3);margin-top:4px;font-style:italic}
+
+/* STATS */
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
+.card-label{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
+.card-value{font-family:var(--sans);font-size:26px;font-weight:600;color:var(--ink);letter-spacing:-0.03em}
+
+/* FORM */
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px}
+.form-card-title{font-family:var(--sans);font-size:10px;font-weight:500;color:var(--ink2);margin-bottom:14px;display:flex;align-items:center;gap:8px;letter-spacing:.04em;text-transform:uppercase}
+.form-card-title::after{content:'';flex:1;height:1px;background:var(--border2)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+label{display:block;font-family:var(--sans);font-size:11px;font-weight:500;color:var(--ink2);margin-bottom:5px}
+input[type="date"],input[type="text"],textarea,select{width:100%;font-family:var(--body);font-size:13px;color:var(--ink);background:var(--bg);border:1px solid var(--border);border-radius:var(--rsm);padding:8px 11px;outline:none;transition:border-color .15s,box-shadow .15s;appearance:none;line-height:1.5}
+input:focus,textarea:focus{border-color:var(--teal-m);box-shadow:0 0 0 3px rgba(29,158,117,0.1)}
+textarea{resize:vertical;min-height:80px}
+.territorio-group{display:flex;gap:6px;flex-wrap:wrap}
+.territorio-tag{font-family:var(--sans);font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--bg);color:var(--ink2);cursor:pointer;transition:all .12s}
+.territorio-tag:hover{border-color:var(--teal-m);color:var(--teal)}
+.territorio-tag.sel{background:var(--teal-l);border-color:var(--teal-m);color:var(--teal);font-weight:500}
+.upload-zone{border:1px dashed var(--border);border-radius:var(--rsm);padding:16px;text-align:center;cursor:pointer;transition:all .15s;background:var(--bg);position:relative}
+.upload-zone:hover{border-color:var(--teal-m);background:var(--teal-l)}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:16px;color:var(--ink3);margin-bottom:3px}
+.upload-lbl{font-family:var(--sans);font-size:12px;color:var(--ink2)}
+.upload-sub{font-size:11px;color:var(--ink3);margin-top:2px}
+.preview-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.prev-item{width:70px;height:70px;border-radius:6px;overflow:hidden;border:1px solid var(--border);position:relative;background:var(--bg2);flex-shrink:0}
+.prev-item img{width:100%;height:100%;object-fit:cover}
+.prev-item .rm{position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:rgba(28,26,23,0.65);color:#fff;border:none;cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center}
+.prev-item .flabel{font-size:9px;color:var(--ink2);text-align:center;padding:6px 4px;word-break:break-all;line-height:1.3;height:100%;display:flex;align-items:center;justify-content:center}
+.status-group{display:flex;gap:6px}
+.status-opt{font-family:var(--sans);font-size:11px;padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:var(--bg);color:var(--ink2);cursor:pointer;transition:all .12s}
+.status-opt:hover{background:var(--bg2)}
+.status-opt.sel-rascunho{background:var(--amber-l);border-color:var(--amber);color:var(--amber)}
+.status-opt.sel-completa{background:var(--teal-l);border-color:var(--teal-m);color:var(--teal)}
+.action-bar{display:flex;gap:8px;align-items:center;padding-top:16px;border-top:1px solid var(--border2)}
+.btn-primary{font-family:var(--sans);font-size:12px;font-weight:500;padding:9px 20px;border-radius:20px;border:none;background:var(--ink);color:var(--bg);cursor:pointer;transition:all .15s}
+.btn-primary:hover{background:#2e2b26;transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.5;cursor:default;transform:none}
+.btn-ghost{font-family:var(--sans);font-size:12px;padding:9px 18px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--ink2);cursor:pointer;transition:all .12s}
+.btn-ghost:hover{background:var(--bg2)}
+.btn-danger{font-family:var(--sans);font-size:12px;padding:9px 18px;border-radius:20px;border:1px solid rgba(153,60,29,0.25);background:transparent;color:var(--coral);cursor:pointer;transition:all .12s;margin-left:auto}
+.btn-danger:hover{background:var(--coral-l)}
+
+/* DADOS RELACIONAIS */
+.relacao-bloco{background:var(--bg);border:1px solid var(--border2);border-radius:var(--rsm);padding:10px 12px}
+.relacao-bloco-title{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.add-item-btn{font-family:var(--sans);font-size:10px;padding:2px 8px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--ink3);cursor:pointer;transition:all .12s}
+.add-item-btn:hover{border-color:var(--teal-m);color:var(--teal)}
+.relacao-items{display:flex;flex-direction:column;gap:5px}
+.relacao-item{display:flex;gap:5px;align-items:center}
+.relacao-item input{flex:1;font-size:12px;padding:5px 8px}
+.relacao-item .rm-item{width:20px;height:20px;border-radius:50%;border:1px solid var(--border);background:transparent;color:var(--ink3);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s;font-family:var(--sans)}
+.relacao-item .rm-item:hover{border-color:var(--coral);color:var(--coral);background:var(--coral-l)}
+.relacoes-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* ARQUIVO */
+.arquivo-filters{display:flex;gap:6px;flex-wrap:wrap}
+.filter-chip{font-family:var(--sans);font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--ink2);cursor:pointer;transition:all .12s}
+.filter-chip:hover{border-color:var(--purple);color:var(--purple)}
+.filter-chip.active{background:var(--purple-l);border-color:var(--purple);color:var(--purple);font-weight:500}
+.laminas-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.lamina-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:8px}
+.lamina-card:hover{border-color:var(--purple);box-shadow:0 4px 16px rgba(83,74,183,0.1);transform:translateY(-1px)}
+.lamina-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.tag{font-family:var(--sans);font-size:10px;padding:2px 8px;border-radius:10px}
+.tag-teal{background:var(--teal-l);color:var(--teal)}
+.tag-amber{background:var(--amber-l);color:var(--amber)}
+.tag-green{background:#EAF3DE;color:#3B6D11}
+.tag-date{color:var(--ink3);font-size:10px;font-family:var(--sans)}
+.lamina-title{font-family:var(--sans);font-size:14px;font-weight:500;color:var(--ink);letter-spacing:-0.01em;line-height:1.3}
+.lamina-snippet{font-family:var(--body);font-size:12px;color:var(--ink3);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-style:italic}
+.lamina-thumb{width:100%;height:90px;border-radius:6px;object-fit:cover;border:1px solid var(--border2)}
+.lamina-foot{display:flex;align-items:center;justify-content:space-between;font-family:var(--sans);font-size:10px;color:var(--ink3)}
+.empty-state{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--ink3)}
+.empty-state p{font-family:var(--sans);font-size:14px;margin-bottom:6px;color:var(--ink2)}
+.empty-state small{font-size:12px}
+
+/* DETALHE */
+.detalhe-sections{display:flex;flex-direction:column;gap:10px}
+.detalhe-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px}
+.detalhe-block-label{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+.detalhe-text{font-family:var(--body);font-size:13px;color:var(--ink);line-height:1.75;white-space:pre-wrap}
+.detalhe-media{display:flex;flex-wrap:wrap;gap:8px}
+.detalhe-media-item{width:100px;height:100px;border-radius:6px;overflow:hidden;border:1px solid var(--border2)}
+.detalhe-media-item img{width:100%;height:100%;object-fit:cover}
+.detalhe-relacoes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.detalhe-rel-bloco{background:var(--bg);border:1px solid var(--border2);border-radius:var(--rsm);padding:10px 12px}
+.detalhe-rel-titulo{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+.detalhe-rel-item{font-family:var(--body);font-size:12px;color:var(--ink);padding:4px 0;border-bottom:1px solid var(--border2);line-height:1.4}
+.detalhe-rel-item:last-child{border-bottom:none}
+.detalhe-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* EDITOR DE DIAGRAMA */
+.diagram-editor{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.diagram-toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border2);background:var(--surface)}
+.diagram-toolbar-label{font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+.diagram-mode-btn{font-family:var(--sans);font-size:11px;padding:4px 10px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--ink2);cursor:pointer;transition:all .12s}
+.diagram-mode-btn:hover{background:var(--bg2)}
+.diagram-mode-btn.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.diagram-mode-btn.connect-active{background:var(--purple-l);color:var(--purple);border-color:var(--purple)}
+.diagram-canvas{position:relative;width:100%;height:420px;overflow:hidden;cursor:default}
+.diagram-canvas.connecting{cursor:crosshair}
+.diagram-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.diagram-svg.interactive{pointer-events:all}
+.d-node{position:absolute;display:flex;align-items:center;justify-content:center;cursor:grab;user-select:none;transition:box-shadow .15s;font-family:var(--sans);font-size:11px;font-weight:500;text-align:center;z-index:2}
+.d-node:active{cursor:grabbing}
+.d-node.selected{box-shadow:0 0 0 2px var(--purple)}
+.d-node.connecting-source{box-shadow:0 0 0 2px var(--teal-m)}
+.d-node.connect-target:hover{box-shadow:0 0 0 2px var(--amber)}
+.d-node-ator{width:72px;height:72px;border-radius:50%;background:var(--surface);border:1.5px solid var(--ink2);color:var(--ink);padding:4px}
+.d-node-pratica{width:72px;height:72px;border-radius:6px;background:var(--surface);border:1.5px solid var(--ink2);color:var(--ink);padding:4px}
+.d-node-espaco{width:96px;height:56px;border-radius:6px;background:var(--surface);border:1.5px solid var(--ink2);color:var(--ink);padding:4px}
+.d-node-outro{width:72px;height:72px;background:transparent;border:none;color:var(--ink);padding:4px}
+.d-node-outro-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transform:rotate(45deg);background:var(--surface);border:1.5px solid var(--ink2)}
+.d-node-outro-label{position:absolute;transform:rotate(0deg);font-family:var(--sans);font-size:10px;font-weight:500;text-align:center;width:80px;line-height:1.2}
+.node-label{font-size:10px;line-height:1.2;max-width:100%;word-break:break-word}
+.diagram-hint{font-family:var(--body);font-size:12px;color:var(--ink3);font-style:italic;padding:8px 14px;border-top:1px solid var(--border2)}
+
+/* MODAL ARESTA */
+.modal-overlay{position:fixed;inset:0;background:rgba(28,26,23,0.4);z-index:100;display:flex;align-items:center;justify-content:center}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;width:320px;box-shadow:0 8px 32px rgba(0,0,0,0.12)}
+.modal-title{font-family:var(--sans);font-size:14px;font-weight:500;color:var(--ink);margin-bottom:16px}
+.edge-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.edge-type-btn{font-family:var(--sans);font-size:11px;padding:10px 8px;border-radius:var(--rsm);border:1px solid var(--border);background:var(--bg);color:var(--ink2);cursor:pointer;transition:all .12s;text-align:left;line-height:1.4}
+.edge-type-btn:hover{border-color:var(--purple);color:var(--purple)}
+.edge-type-btn.selected{border-color:var(--purple);background:var(--purple-l);color:var(--purple)}
+.edge-type-btn .et-label{font-weight:500;display:block;margin-bottom:2px}
+.edge-type-btn .et-desc{font-size:10px;opacity:.7}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end}
+
+/* EDGE LEGEND */
+.edge-legend{display:flex;gap:12px;flex-wrap:wrap;padding:8px 14px;border-top:1px solid var(--border2);background:var(--surface)}
+.edge-legend-item{display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:10px;color:var(--ink3)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--bg);font-family:var(--sans);font-size:12px;padding:9px 18px;border-radius:20px;transition:transform .3s cubic-bezier(0.34,1.56,0.64,1);z-index:200;white-space:nowrap;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:300}
+.loading-logo{font-family:var(--display);font-size:32px;color:var(--ink);letter-spacing:.06em}
+.loading-text{font-family:var(--sans);font-size:12px;color:var(--ink3)}
+.loading-bar{width:120px;height:2px;background:var(--bg3);border-radius:2px;overflow:hidden}
+.loading-bar-inner{height:100%;background:var(--teal-m);border-radius:2px;animation:loadbar 1.2s ease-in-out infinite}
+@keyframes loadbar{0%{width:0;margin-left:0}50%{width:100%;margin-left:0}100%{width:0;margin-left:100%}}
 </style>
 </head>
 <body>
 
-<!-- Loading -->
 <div class="loading-overlay" id="loading">
   <div class="loading-logo">DIAGRAMOGRAMA</div>
   <div class="loading-bar"><div class="loading-bar-inner"></div></div>
   <div class="loading-text" id="loading-text">carregando...</div>
 </div>
 
-<!-- Topbar -->
 <div class="topbar">
   <div class="logo">DIAGRAMOGRAMA</div>
   <div class="topbar-sep"></div>
-  <nav class="topbar-nav" id="topbar-nav">
-    <button class="topbar-btn active" id="nav-nova" onclick="showView('nova',this)" disabled>+ nova lâmina</button>
+  <nav class="topbar-nav">
     <button class="topbar-btn" id="nav-arquivo" onclick="showView('arquivo',this)" disabled>arquivo</button>
+    <button class="topbar-btn" id="nav-nova" onclick="showView('nova',this)" disabled>+ nova lâmina</button>
   </nav>
   <div class="topbar-right">
     <span class="lamina-counter" id="top-counter"></span>
-    <div class="sync-status" id="sync-status" style="display:none;">
+    <div class="sync-status" id="sync-status" style="display:none">
       <div class="sync-dot" id="sync-dot"></div>
       <span id="sync-label">Drive</span>
     </div>
@@ -755,41 +260,65 @@ textarea { resize: vertical; min-height: 80px; }
   </div>
 </div>
 
-<!-- Login screen -->
-<div class="login-screen" id="login-screen" style="display:none;">
+<div class="login-screen" id="login-screen" style="display:none">
   <div class="login-logo">DIAGRAMOGRAMA</div>
   <div class="login-sub">plataforma de inscrição e organização diagramográfica — módulo 1</div>
   <div class="login-card">
     <h2>Entrar com Google</h2>
     <p>Os dados das suas lâminas serão salvos no seu Google Drive, numa pasta chamada <strong>Diagramograma</strong>.</p>
     <button class="btn-google" onclick="iniciarLogin()">
-      <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
       Continuar com Google
     </button>
   </div>
 </div>
 
-<!-- App body -->
 <div class="app-body" id="app-body">
-  <aside class="sidebar">
-    <div class="sidebar-section">
-      <div class="sidebar-label">territórios</div>
-      <button class="sidebar-item active" onclick="filtrarSidebar(this,'todos')">Todas as lâminas <span class="sidebar-badge" id="sb-todos">0</span></button>
-      <button class="sidebar-item" onclick="filtrarSidebar(this,'Vergel do Lago')">Vergel do Lago <span class="sidebar-badge" id="sb-vergel">0</span></button>
-      <button class="sidebar-item" onclick="filtrarSidebar(this,'Pontal da Barra')">Pontal da Barra <span class="sidebar-badge" id="sb-pontal">0</span></button>
-    </div>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">status</div>
-      <button class="sidebar-item" onclick="filtrarSidebar(this,'rascunho')">Rascunhos <span class="sidebar-badge" id="sb-rascunho">0</span></button>
-      <button class="sidebar-item" onclick="filtrarSidebar(this,'completa')">Completas <span class="sidebar-badge" id="sb-completa">0</span></button>
-    </div>
-  </aside>
+  <div class="sidebar-wrapper" id="sidebar-wrapper">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">territórios</div>
+        <button class="sidebar-item active" onclick="filtrarSidebar(this,'todos')">Todas as lâminas <span class="sidebar-badge" id="sb-todos">0</span></button>
+        <button class="sidebar-item" onclick="filtrarSidebar(this,'Vergel do Lago')">Vergel do Lago <span class="sidebar-badge" id="sb-vergel">0</span></button>
+        <button class="sidebar-item" onclick="filtrarSidebar(this,'Pontal da Barra')">Pontal da Barra <span class="sidebar-badge" id="sb-pontal">0</span></button>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">status</div>
+        <button class="sidebar-item" onclick="filtrarSidebar(this,'rascunho')">Rascunhos <span class="sidebar-badge" id="sb-rascunho">0</span></button>
+        <button class="sidebar-item" onclick="filtrarSidebar(this,'completa')">Completas <span class="sidebar-badge" id="sb-completa">0</span></button>
+      </div>
+    </aside>
+    <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" title="Recolher painel">‹</button>
+  </div>
 
   <main class="main">
 
-    <!-- NOVA LÂMINA -->
-    <div class="view active" id="view-nova">
+    <!-- ARQUIVO -->
+    <div class="view active" id="view-arquivo">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Arquivo de lâminas</div>
+          <div class="page-subtitle" id="arquivo-subtitle">todas as lâminas</div>
+        </div>
+        <div class="cards-grid" style="grid-template-columns:repeat(3,110px)">
+          <div class="card"><div class="card-label">Total</div><div class="card-value" id="stat-total">0</div></div>
+          <div class="card"><div class="card-label">Rascunhos</div><div class="card-value" id="stat-rascunho" style="color:var(--amber)">0</div></div>
+          <div class="card"><div class="card-label">Completas</div><div class="card-value" id="stat-completa" style="color:var(--teal)">0</div></div>
+        </div>
+      </div>
+      <div class="arquivo-filters">
+        <button class="filter-chip active" onclick="filtrar(this,'todos')">todas</button>
+        <button class="filter-chip" onclick="filtrar(this,'Vergel do Lago')">Vergel do Lago</button>
+        <button class="filter-chip" onclick="filtrar(this,'Pontal da Barra')">Pontal da Barra</button>
+        <button class="filter-chip" onclick="filtrar(this,'rascunho')">rascunhos</button>
+        <button class="filter-chip" onclick="filtrar(this,'completa')">completas</button>
+      </div>
+      <div class="laminas-grid" id="laminas-grid"></div>
+    </div>
+
+    <!-- NOVA / EDITAR LÂMINA -->
+    <div class="view" id="view-nova">
       <div class="page-header">
         <div>
           <div class="page-title" id="form-page-title">Nova lâmina</div>
@@ -803,7 +332,7 @@ textarea { resize: vertical; min-height: 80px; }
           <div><label>Data do campo</label><input type="date" id="f-data"></div>
           <div><label>Título da lâmina</label><input type="text" id="f-titulo" placeholder="ex: primeira manhã no Vergel"></div>
         </div>
-        <div>
+        <div style="margin-bottom:12px">
           <label>Território</label>
           <div class="territorio-group">
             <button class="territorio-tag" onclick="selTerritorio(this,'Vergel do Lago')">Vergel do Lago</button>
@@ -811,7 +340,11 @@ textarea { resize: vertical; min-height: 80px; }
             <button class="territorio-tag" onclick="selTerritorio(this,'Ambos')">Ambos</button>
             <button class="territorio-tag" onclick="selTerritorio(this,'Outro')">Outro</button>
           </div>
-          <input type="text" id="f-outro-territorio" placeholder="especifique" style="margin-top:8px;display:none;">
+          <input type="text" id="f-outro-territorio" placeholder="especifique" style="margin-top:8px;display:none">
+        </div>
+        <div>
+          <label>Foco atencional do campo</label>
+          <input type="text" id="f-foco" placeholder="ex: práticas de trabalho na orla ao entardecer">
         </div>
       </div>
 
@@ -828,35 +361,58 @@ textarea { resize: vertical; min-height: 80px; }
 
       <div class="form-card">
         <div class="form-card-title">Registros escritos</div>
-        <div style="margin-bottom:12px;">
+        <div style="margin-bottom:12px">
           <label>Relato de campo</label>
           <textarea id="f-relato" placeholder="narrativa do que foi observado, descrições do território, conversas..."></textarea>
         </div>
         <div>
           <label>Registro afetivo</label>
-          <textarea id="f-afeto" placeholder="estados do corpo-pesquisador, afetações, tensões, o que o campo produziu em você..." style="min-height:68px;"></textarea>
+          <textarea id="f-afeto" placeholder="estados do corpo-pesquisador, afetações, tensões, o que o campo produziu em você..." style="min-height:68px"></textarea>
         </div>
       </div>
 
       <div class="form-card">
-        <div class="form-card-title">Relações observadas</div>
-        <div class="relacoes-grid">
+        <div class="form-card-title">Dados relacionais</div>
+        <div class="relacoes-grid" style="margin-bottom:14px">
           <div class="relacao-bloco">
-            <div class="relacao-bloco-title">Atores <button class="add-item-btn" onclick="addRelacaoItem('rel-atores')">+ adicionar</button></div>
+            <div class="relacao-bloco-title">Atores <button class="add-item-btn" onclick="addDado('rel-atores','ator')">+ adicionar</button></div>
             <div class="relacao-items" id="rel-atores"></div>
           </div>
           <div class="relacao-bloco">
-            <div class="relacao-bloco-title">Práticas <button class="add-item-btn" onclick="addRelacaoItem('rel-praticas')">+ adicionar</button></div>
+            <div class="relacao-bloco-title">Práticas <button class="add-item-btn" onclick="addDado('rel-praticas','pratica')">+ adicionar</button></div>
             <div class="relacao-items" id="rel-praticas"></div>
           </div>
           <div class="relacao-bloco">
-            <div class="relacao-bloco-title">Espaços de acontecimento <button class="add-item-btn" onclick="addRelacaoItem('rel-espacos')">+ adicionar</button></div>
+            <div class="relacao-bloco-title">Espaços de acontecimento <button class="add-item-btn" onclick="addDado('rel-espacos','espaco')">+ adicionar</button></div>
             <div class="relacao-items" id="rel-espacos"></div>
           </div>
           <div class="relacao-bloco">
-            <div class="relacao-bloco-title">Tensões e ausências <button class="add-item-btn" onclick="addRelacaoItem('rel-tensoes')">+ adicionar</button></div>
-            <div class="relacao-items" id="rel-tensoes"></div>
+            <div class="relacao-bloco-title">Outros <button class="add-item-btn" onclick="addDado('rel-outros','outro')">+ adicionar</button></div>
+            <div class="relacao-items" id="rel-outros"></div>
           </div>
+        </div>
+        <div style="font-family:var(--body);font-size:11px;color:var(--ink3);font-style:italic;margin-bottom:10px">Os dados inseridos acima geram nós automaticamente no editor de diagrama abaixo.</div>
+
+        <!-- EDITOR DE DIAGRAMA -->
+        <div class="diagram-editor">
+          <div class="diagram-toolbar">
+            <span class="diagram-toolbar-label">Editor de diagrama</span>
+            <button class="diagram-mode-btn active" id="btn-move" onclick="setMode('move')">mover</button>
+            <button class="diagram-mode-btn" id="btn-connect" onclick="setMode('connect')">conectar nós</button>
+            <button class="diagram-mode-btn" id="btn-rm-edge" onclick="setMode('rm-edge')">remover aresta</button>
+            <button class="diagram-mode-btn" onclick="autoLayout()" style="margin-left:auto">reorganizar</button>
+          </div>
+          <div class="diagram-canvas" id="diagram-canvas">
+            <svg class="diagram-svg interactive" id="diagram-svg" xmlns="http://www.w3.org/2000/svg"></svg>
+          </div>
+          <div class="edge-legend">
+            <span class="edge-legend-item"><svg width="32" height="10"><line x1="0" y1="5" x2="32" y2="5" stroke="#4A4740" stroke-width="1.5" marker-end="url(#la)"/><defs><marker id="la" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#4A4740" stroke-width="1.5"/></marker></defs></svg>associação</span>
+            <span class="edge-legend-item"><svg width="32" height="10"><line x1="0" y1="5" x2="32" y2="5" stroke="#4A4740" stroke-width="1.5" marker-end="url(#lb)" marker-start="url(#lb2)"/><defs><marker id="lb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#4A4740" stroke-width="1.5"/></marker><marker id="lb2" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#4A4740" stroke-width="1.5"/></marker></defs></svg>interdependência</span>
+            <span class="edge-legend-item"><svg width="32" height="10"><line x1="0" y1="5" x2="32" y2="5" stroke="#4A4740" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#lc)"/><defs><marker id="lc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#4A4740" stroke-width="1"/></marker></defs></svg>frágil</span>
+            <span class="edge-legend-item"><svg width="32" height="10"><line x1="0" y1="5" x2="32" y2="5" stroke="#993C1D" stroke-width="2" marker-end="url(#ld)"/><defs><marker id="ld" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#993C1D" stroke-width="1.5"/></marker></defs></svg>tensão</span>
+            <span class="edge-legend-item"><svg width="32" height="10"><line x1="0" y1="5" x2="32" y2="5" stroke="#4A4740" stroke-width="1" stroke-dasharray="2 4" marker-end="url(#le)"/><defs><marker id="le" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="#4A4740" stroke-width="1"/></marker></defs></svg>ausência</span>
+          </div>
+          <div class="diagram-hint" id="diagram-hint">modo mover — arraste os nós para reposicioná-los. Use "conectar nós" para criar relações.</div>
         </div>
       </div>
 
@@ -874,40 +430,17 @@ textarea { resize: vertical; min-height: 80px; }
       </div>
     </div>
 
-    <!-- ARQUIVO -->
-    <div class="view" id="view-arquivo">
-      <div class="page-header">
-        <div>
-          <div class="page-title">Arquivo de lâminas</div>
-          <div class="page-subtitle" id="arquivo-subtitle">todas as lâminas</div>
-        </div>
-        <div class="cards-grid" style="grid-template-columns:repeat(3,110px);">
-          <div class="card"><div class="card-label">Total</div><div class="card-value" id="stat-total">0</div></div>
-          <div class="card"><div class="card-label">Rascunhos</div><div class="card-value" id="stat-rascunho" style="color:var(--amber)">0</div></div>
-          <div class="card"><div class="card-label">Completas</div><div class="card-value" id="stat-completa" style="color:var(--teal)">0</div></div>
-        </div>
-      </div>
-      <div class="arquivo-filters">
-        <button class="filter-chip active" onclick="filtrar(this,'todos')">todas</button>
-        <button class="filter-chip" onclick="filtrar(this,'Vergel do Lago')">Vergel do Lago</button>
-        <button class="filter-chip" onclick="filtrar(this,'Pontal da Barra')">Pontal da Barra</button>
-        <button class="filter-chip" onclick="filtrar(this,'rascunho')">rascunhos</button>
-        <button class="filter-chip" onclick="filtrar(this,'completa')">completas</button>
-      </div>
-      <div class="laminas-grid" id="laminas-grid"></div>
-    </div>
-
     <!-- DETALHE -->
     <div class="view" id="view-detalhe">
       <div class="page-header">
         <div>
-          <button class="btn-ghost" onclick="showView('arquivo',document.getElementById('nav-arquivo'));renderArquivo()" style="margin-bottom:10px;">← voltar ao arquivo</button>
+          <button class="btn-ghost" onclick="showView('arquivo',document.getElementById('nav-arquivo'));renderArquivo()" style="margin-bottom:10px">← voltar ao arquivo</button>
           <div class="page-title" id="det-titulo"></div>
-          <div class="detalhe-meta" id="det-meta" style="margin-top:8px;"></div>
+          <div class="detalhe-meta" id="det-meta" style="margin-top:8px"></div>
         </div>
       </div>
       <div class="detalhe-sections" id="det-sections"></div>
-      <div class="action-bar" style="margin-top:8px;">
+      <div class="action-bar" style="margin-top:8px">
         <button class="btn-ghost" onclick="editarLamina()">Editar lâmina</button>
         <button class="btn-danger" onclick="excluirLamina()">Excluir lâmina</button>
       </div>
@@ -916,489 +449,637 @@ textarea { resize: vertical; min-height: 80px; }
   </main>
 </div>
 
+<!-- MODAL ARESTA -->
+<div class="modal-overlay" id="modal-edge" style="display:none">
+  <div class="modal">
+    <div class="modal-title">Qualidade da relação</div>
+    <div class="edge-type-grid" id="edge-type-grid">
+      <button class="edge-type-btn" onclick="selectEdgeType('associacao')"><span class="et-label">Associação</span><span class="et-desc">A e B se relacionam</span></button>
+      <button class="edge-type-btn" onclick="selectEdgeType('interdependencia')"><span class="et-label">Interdependência</span><span class="et-desc">A e B se influenciam mutuamente</span></button>
+      <button class="edge-type-btn" onclick="selectEdgeType('fragil')"><span class="et-label">Frágil / incerta</span><span class="et-desc">relação intermitente</span></button>
+      <button class="edge-type-btn" onclick="selectEdgeType('tensao')"><span class="et-label">Tensão ativa</span><span class="et-desc">conflito ou pressão</span></button>
+      <button class="edge-type-btn" onclick="selectEdgeType('ausencia')"><span class="et-label">Ausência inferida</span><span class="et-desc">deveria haver, mas não há</span></button>
+    </div>
+    <div style="margin-bottom:14px">
+      <label>Rótulo opcional</label>
+      <input type="text" id="edge-label-input" placeholder="ex: pouca iluminação / 17h">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-ghost" onclick="cancelEdge()">Cancelar</button>
+      <button class="btn-primary" onclick="confirmEdge()">Criar relação</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ──
-const CLIENT_ID = '845964039614-0qi4eoipeblglshnfql7ldfn3gugbu31.apps.googleusercontent.com';
-const SCOPES = 'https://www.googleapis.com/auth/drive.file';
-const FOLDER_NAME = 'Diagramograma';
-const FILE_NAME = 'laminas.json';
+const CLIENT_ID='845964039614-0qi4eoipeblglshnfql7ldfn3gugbu31.apps.googleusercontent.com';
+const SCOPES='https://www.googleapis.com/auth/drive.file';
+const FOLDER_NAME='Diagramograma';
+const FILE_NAME='laminas.json';
 
-// ── STATE ──
-let laminas = [];
-let uploadedFiles = [];
-let currentStatus = 'rascunho';
-let currentFilter = 'todos';
-let currentDetalheId = null;
-let editandoId = null;
-let tokenClient = null;
-let accessToken = null;
-let folderId = null;
-let fileId = null;
-let isSaving = false;
+let laminas=[],uploadedFiles=[],currentStatus='rascunho',currentFilter='todos';
+let currentDetalheId=null,editandoId=null;
+let tokenClient=null,accessToken=null,folderId=null,fileId=null,isSaving=false;
+let sidebarOpen=true;
 
-// ── INIT ──
-window.onload = () => {
+// DIAGRAM STATE
+let diagramNodes=[]; // {id,type,label,x,y}
+let diagramEdges=[]; // {id,from,to,type,label}
+let diagramMode='move';
+let connectSource=null;
+let pendingEdge=null;
+let dragNode=null,dragOffX=0,dragOffY=0;
+let selectedEdgeType=null;
+
+window.onload=()=>{
   setLoading('iniciando...');
-  // init GIS
-  try {
-    tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: CLIENT_ID,
-      scope: SCOPES,
-      callback: onTokenReceived,
-    });
-  } catch(e) {
-    console.error('GIS init error', e);
-  }
-
-  // check saved token
-  const saved = sessionStorage.getItem('dgm_token');
-  if (saved) {
-    accessToken = saved;
-    initApp();
-  } else {
-    hideLoading();
-    showLoginScreen();
-  }
+  try{
+    tokenClient=google.accounts.oauth2.initTokenClient({client_id:CLIENT_ID,scope:SCOPES,callback:onTokenReceived});
+  }catch(e){console.error('GIS',e)}
+  const saved=sessionStorage.getItem('dgm_token');
+  if(saved){accessToken=saved;initApp();}
+  else{hideLoading();showLoginScreen();}
 };
 
-function setLoading(msg) {
-  document.getElementById('loading').style.display = 'flex';
-  document.getElementById('loading-text').textContent = msg;
-}
-
-function hideLoading() {
-  document.getElementById('loading').style.display = 'none';
-}
-
-function showLoginScreen() {
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('app-body').classList.remove('visible');
-}
-
-function iniciarLogin() {
-  tokenClient.requestAccessToken({ prompt: 'consent' });
-}
-
-function onTokenReceived(resp) {
-  if (resp.error) { showToast('erro ao autenticar'); return; }
-  accessToken = resp.access_token;
-  sessionStorage.setItem('dgm_token', accessToken);
-  document.getElementById('login-screen').style.display = 'none';
+function setLoading(msg){document.getElementById('loading').style.display='flex';document.getElementById('loading-text').textContent=msg;}
+function hideLoading(){document.getElementById('loading').style.display='none';}
+function showLoginScreen(){document.getElementById('login-screen').style.display='flex';document.getElementById('app-body').classList.remove('visible');}
+function iniciarLogin(){tokenClient.requestAccessToken({prompt:'consent'});}
+function onTokenReceived(resp){
+  if(resp.error){showToast('erro ao autenticar');return;}
+  accessToken=resp.access_token;
+  sessionStorage.setItem('dgm_token',accessToken);
+  document.getElementById('login-screen').style.display='none';
   initApp();
 }
 
-async function initApp() {
+async function initApp(){
   setLoading('conectando ao Drive...');
-  try {
+  try{
     await ensureFolder();
     setLoading('carregando lâminas...');
     await carregarDrive();
-    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('login-screen').style.display='none';
     document.getElementById('app-body').classList.add('visible');
-    document.getElementById('nav-nova').disabled = false;
-    document.getElementById('nav-arquivo').disabled = false;
-    document.getElementById('sync-status').style.display = 'flex';
-    document.getElementById('auth-area').innerHTML = `<button class="btn-logout" onclick="logout()">sair</button>`;
-    setSyncStatus('ok', 'Drive sincronizado');
+    document.getElementById('nav-arquivo').disabled=false;
+    document.getElementById('nav-nova').disabled=false;
+    document.getElementById('sync-status').style.display='flex';
+    document.getElementById('auth-area').innerHTML=`<button class="btn-logout" onclick="logout()">sair</button>`;
+    setSyncStatus('ok','Drive sincronizado');
     hideLoading();
+    renderArquivo();
     updateStats();
     updateSidebar();
-  } catch(e) {
-    console.error(e);
-    hideLoading();
-    if (e.status === 401) {
-      sessionStorage.removeItem('dgm_token');
-      showLoginScreen();
-    } else {
-      showToast('erro ao conectar ao Drive');
-      showLoginScreen();
-    }
+  }catch(e){
+    console.error(e);hideLoading();
+    if(e.status===401){sessionStorage.removeItem('dgm_token');showLoginScreen();}
+    else{showToast('erro ao conectar ao Drive');showLoginScreen();}
   }
 }
 
-function logout() {
+function logout(){
   google.accounts.oauth2.revoke(accessToken);
-  accessToken = null;
-  sessionStorage.removeItem('dgm_token');
-  laminas = [];
-  showLoginScreen();
+  accessToken=null;sessionStorage.removeItem('dgm_token');laminas=[];showLoginScreen();
 }
 
-// ── DRIVE API ──
-async function driveRequest(url, options = {}) {
-  const res = await fetch(url, {
-    ...options,
-    headers: {
-      'Authorization': `Bearer ${accessToken}`,
-      ...(options.headers || {})
-    }
-  });
-  if (!res.ok) {
-    const err = new Error(`Drive API error: ${res.status}`);
-    err.status = res.status;
-    throw err;
-  }
+async function driveRequest(url,options={}){
+  const res=await fetch(url,{...options,headers:{'Authorization':`Bearer ${accessToken}`,...(options.headers||{})}});
+  if(!res.ok){const e=new Error(`Drive error:${res.status}`);e.status=res.status;throw e;}
   return res;
 }
 
-async function ensureFolder() {
-  const res = await driveRequest(
-    `https://www.googleapis.com/drive/v3/files?q=name='${FOLDER_NAME}' and mimeType='application/vnd.google-apps.folder' and trashed=false&fields=files(id,name)`
-  );
-  const data = await res.json();
-  if (data.files && data.files.length > 0) {
-    folderId = data.files[0].id;
-  } else {
-    const cr = await driveRequest('https://www.googleapis.com/drive/v3/files', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: FOLDER_NAME, mimeType: 'application/vnd.google-apps.folder' })
-    });
-    const fd = await cr.json();
-    folderId = fd.id;
+async function ensureFolder(){
+  const res=await driveRequest(`https://www.googleapis.com/drive/v3/files?q=name='${FOLDER_NAME}' and mimeType='application/vnd.google-apps.folder' and trashed=false&fields=files(id)`);
+  const d=await res.json();
+  if(d.files&&d.files.length>0){folderId=d.files[0].id;}
+  else{
+    const cr=await driveRequest('https://www.googleapis.com/drive/v3/files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:FOLDER_NAME,mimeType:'application/vnd.google-apps.folder'})});
+    folderId=(await cr.json()).id;
   }
 }
 
-async function carregarDrive() {
-  const res = await driveRequest(
-    `https://www.googleapis.com/drive/v3/files?q=name='${FILE_NAME}' and '${folderId}' in parents and trashed=false&fields=files(id,name)`
-  );
-  const data = await res.json();
-  if (data.files && data.files.length > 0) {
-    fileId = data.files[0].id;
-    const content = await driveRequest(
-      `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`
-    );
-    laminas = await content.json();
-  } else {
-    laminas = [];
-    await salvarDrive();
-  }
+async function carregarDrive(){
+  const res=await driveRequest(`https://www.googleapis.com/drive/v3/files?q=name='${FILE_NAME}' and '${folderId}' in parents and trashed=false&fields=files(id)`);
+  const d=await res.json();
+  if(d.files&&d.files.length>0){
+    fileId=d.files[0].id;
+    const content=await driveRequest(`https://www.googleapis.com/drive/v3/files/${fileId}?alt=media`);
+    laminas=await content.json();
+  }else{laminas=[];await salvarDrive();}
 }
 
-async function salvarDrive() {
-  if (isSaving) return;
-  isSaving = true;
-  setSyncStatus('syncing', 'salvando...');
-  try {
-    const body = JSON.stringify(laminas);
-    if (fileId) {
-      await driveRequest(
-        `https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=media`,
-        { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body }
-      );
-    } else {
-      const meta = { name: FILE_NAME, parents: [folderId] };
-      const form = new FormData();
-      form.append('metadata', new Blob([JSON.stringify(meta)], { type: 'application/json' }));
-      form.append('file', new Blob([body], { type: 'application/json' }));
-      const res = await driveRequest(
-        'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',
-        { method: 'POST', body: form }
-      );
-      const d = await res.json();
-      fileId = d.id;
+async function salvarDrive(){
+  if(isSaving)return;isSaving=true;setSyncStatus('syncing','salvando...');
+  try{
+    const body=JSON.stringify(laminas);
+    if(fileId){
+      await driveRequest(`https://www.googleapis.com/upload/drive/v3/files/${fileId}?uploadType=media`,{method:'PATCH',headers:{'Content-Type':'application/json'},body});
+    }else{
+      const meta={name:FILE_NAME,parents:[folderId]};
+      const form=new FormData();
+      form.append('metadata',new Blob([JSON.stringify(meta)],{type:'application/json'}));
+      form.append('file',new Blob([body],{type:'application/json'}));
+      const r=await driveRequest('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',{method:'POST',body:form});
+      fileId=(await r.json()).id;
     }
-    setSyncStatus('ok', 'Drive sincronizado');
-  } catch(e) {
-    console.error(e);
-    setSyncStatus('error', 'erro ao salvar');
-    showToast('erro ao salvar no Drive');
-  } finally {
-    isSaving = false;
-  }
+    setSyncStatus('ok','Drive sincronizado');
+  }catch(e){console.error(e);setSyncStatus('error','erro ao salvar');showToast('erro ao salvar no Drive');}
+  finally{isSaving=false;}
 }
 
-function setSyncStatus(state, label) {
-  const dot = document.getElementById('sync-dot');
-  dot.className = 'sync-dot ' + state;
-  document.getElementById('sync-label').textContent = label;
+function setSyncStatus(state,label){
+  document.getElementById('sync-dot').className='sync-dot '+state;
+  document.getElementById('sync-label').textContent=label;
 }
 
-// ── UI ──
-function showView(v, navBtn) {
-  document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.topbar-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById('view-' + v).classList.add('active');
-  if (navBtn) navBtn.classList.add('active');
-  if (v === 'arquivo') renderArquivo();
+// SIDEBAR
+function toggleSidebar(){
+  sidebarOpen=!sidebarOpen;
+  const sb=document.getElementById('sidebar');
+  const toggle=document.getElementById('sidebar-toggle');
+  sb.classList.toggle('collapsed',!sidebarOpen);
+  toggle.textContent=sidebarOpen?'‹':'›';
+  toggle.style.left=sidebarOpen?'var(--sidebar)':'0px';
+}
+
+// VIEWS
+function showView(v,navBtn){
+  document.querySelectorAll('.view').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.topbar-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  if(navBtn)navBtn.classList.add('active');
+  if(v==='arquivo')renderArquivo();
   updateSidebar();
 }
 
-function selTerritorio(btn, val) {
-  document.querySelectorAll('.territorio-tag').forEach(b => b.classList.remove('sel'));
+// FORM
+function selTerritorio(btn,val){
+  document.querySelectorAll('.territorio-tag').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
-  document.getElementById('f-outro-territorio').style.display = val === 'Outro' ? 'block' : 'none';
+  document.getElementById('f-outro-territorio').style.display=val==='Outro'?'block':'none';
 }
 
-function setStatus(s) {
-  currentStatus = s;
-  document.getElementById('btn-rascunho').className = 'status-opt' + (s === 'rascunho' ? ' sel-rascunho' : '');
-  document.getElementById('btn-completa').className = 'status-opt' + (s === 'completa' ? ' sel-completa' : '');
+function setStatus(s){
+  currentStatus=s;
+  document.getElementById('btn-rascunho').className='status-opt'+(s==='rascunho'?' sel-rascunho':'');
+  document.getElementById('btn-completa').className='status-opt'+(s==='completa'?' sel-completa':'');
 }
 
-function handleFiles(files) {
-  Array.from(files).forEach(file => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      uploadedFiles.push({ name: file.name, type: file.type, data: e.target.result });
-      renderPreviews();
-    };
+function handleFiles(files){
+  Array.from(files).forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=e=>{uploadedFiles.push({name:file.name,type:file.type,data:e.target.result});renderPreviews();};
     reader.readAsDataURL(file);
   });
 }
 
-function renderPreviews() {
-  document.getElementById('preview-grid').innerHTML = uploadedFiles.map((f, i) =>
+function renderPreviews(){
+  document.getElementById('preview-grid').innerHTML=uploadedFiles.map((f,i)=>
     f.type.startsWith('image/')
-      ? `<div class="prev-item"><img src="${f.data}"><button class="rm" onclick="removeFile(${i})">×</button></div>`
-      : `<div class="prev-item"><div class="flabel">${f.name}</div><button class="rm" onclick="removeFile(${i})">×</button></div>`
+      ?`<div class="prev-item"><img src="${f.data}"><button class="rm" onclick="removeFile(${i})">×</button></div>`
+      :`<div class="prev-item"><div class="flabel">${f.name}</div><button class="rm" onclick="removeFile(${i})">×</button></div>`
   ).join('');
 }
+function removeFile(i){uploadedFiles.splice(i,1);renderPreviews();}
 
-function removeFile(i) { uploadedFiles.splice(i, 1); renderPreviews(); }
-
-function addRelacaoItem(catId, value = '') {
-  const container = document.getElementById(catId);
-  const div = document.createElement('div');
-  div.className = 'relacao-item';
-  div.innerHTML = `<input type="text" placeholder="—" value="${value}"><button class="rm-item" onclick="this.parentElement.remove()">×</button>`;
+function addDado(catId,tipo,value=''){
+  const container=document.getElementById(catId);
+  const div=document.createElement('div');
+  div.className='relacao-item';
+  div.dataset.tipo=tipo;
+  div.innerHTML=`<input type="text" placeholder="—" value="${value}" oninput="syncNodes()"><button class="rm-item" onclick="this.parentElement.remove();syncNodes()">×</button>`;
   container.appendChild(div);
   div.querySelector('input').focus();
 }
 
-function getRelacoes(catId) {
-  return Array.from(document.getElementById(catId).querySelectorAll('input'))
-    .map(i => i.value.trim()).filter(Boolean);
+function getDados(catId,tipo){
+  return Array.from(document.getElementById(catId).querySelectorAll('.relacao-item')).map(d=>({
+    label:d.querySelector('input').value.trim(),tipo
+  })).filter(d=>d.label);
 }
 
-function setRelacoes(catId, items) {
-  document.getElementById(catId).innerHTML = '';
-  (items || []).forEach(v => addRelacaoItem(catId, v));
+function setDados(catId,tipo,items){
+  document.getElementById(catId).innerHTML='';
+  (items||[]).forEach(v=>addDado(catId,tipo,v));
 }
 
-async function salvarLamina() {
-  const data = document.getElementById('f-data').value;
-  const titulo = document.getElementById('f-titulo').value.trim();
-  const tSel = document.querySelector('.territorio-tag.sel');
-  const territorio = tSel
-    ? (tSel.textContent === 'Outro' ? document.getElementById('f-outro-territorio').value.trim() : tSel.textContent)
-    : '';
+// DIAGRAM ENGINE
+function syncNodes(){
+  const canvas=document.getElementById('diagram-canvas');
+  const W=canvas.offsetWidth||600;
+  const H=canvas.offsetHeight||400;
+  const allDados=[
+    ...getDados('rel-atores','ator'),
+    ...getDados('rel-praticas','pratica'),
+    ...getDados('rel-espacos','espaco'),
+    ...getDados('rel-outros','outro')
+  ];
+  // keep existing positions, add new nodes, remove deleted
+  const existingIds=new Set(diagramNodes.map(n=>n.id));
+  const newIds=new Set(allDados.map(d=>d.tipo+'::'+d.label));
+  // remove deleted
+  diagramNodes=diagramNodes.filter(n=>newIds.has(n.id));
+  diagramEdges=diagramEdges.filter(e=>newIds.has(e.from)&&newIds.has(e.to));
+  // add new
+  allDados.forEach((d,i)=>{
+    const id=d.tipo+'::'+d.label;
+    if(!existingIds.has(id)){
+      // auto position in a rough circle
+      const angle=(i/Math.max(allDados.length,1))*2*Math.PI;
+      const r=Math.min(W,H)*0.3;
+      diagramNodes.push({id,type:d.tipo,label:d.label,x:W/2+r*Math.cos(angle)-36,y:H/2+r*Math.sin(angle)-28});
+    }
+  });
+  renderDiagram();
+}
 
-  if (!data) { showToast('indique a data do campo'); return; }
-  if (!territorio) { showToast('selecione o território'); return; }
+function autoLayout(){
+  const canvas=document.getElementById('diagram-canvas');
+  const W=canvas.offsetWidth||600;const H=canvas.offsetHeight||400;
+  const n=diagramNodes.length;
+  diagramNodes.forEach((node,i)=>{
+    const angle=(i/Math.max(n,1))*2*Math.PI;
+    const r=Math.min(W,H)*0.32;
+    node.x=W/2+r*Math.cos(angle)-36;
+    node.y=H/2+r*Math.sin(angle)-28;
+  });
+  renderDiagram();
+}
 
-  const lamina = {
-    id: editandoId || Date.now().toString(),
-    data, titulo: titulo || `campo — ${data}`,
-    territorio,
-    relato: document.getElementById('f-relato').value.trim(),
-    afeto: document.getElementById('f-afeto').value.trim(),
-    relacoes: {
-      atores: getRelacoes('rel-atores'),
-      praticas: getRelacoes('rel-praticas'),
-      espacos: getRelacoes('rel-espacos'),
-      tensoes: getRelacoes('rel-tensoes')
-    },
-    status: currentStatus,
-    arquivos: uploadedFiles.map(f => ({ name: f.name, type: f.type, data: f.data })),
-    criadaEm: editandoId ? (laminas.find(l => l.id === editandoId)?.criadaEm || Date.now()) : Date.now(),
-    atualizadaEm: Date.now()
+function nodeCenter(node){
+  let w=72,h=72;
+  if(node.type==='espaco'){w=96;h=56;}
+  return{x:node.x+w/2,y:node.y+h/2,w,h};
+}
+
+function renderDiagram(){
+  const canvas=document.getElementById('diagram-canvas');
+  // clear existing node elements
+  canvas.querySelectorAll('.d-node').forEach(el=>el.remove());
+  // render edges in SVG
+  const svg=document.getElementById('diagram-svg');
+  svg.innerHTML=`<defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <marker id="arr2" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>`;
+  diagramEdges.forEach(edge=>{
+    const fromNode=diagramNodes.find(n=>n.id===edge.from);
+    const toNode=diagramNodes.find(n=>n.id===edge.to);
+    if(!fromNode||!toNode)return;
+    const fc=nodeCenter(fromNode),tc=nodeCenter(toNode);
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.style.cursor=diagramMode==='rm-edge'?'pointer':'default';
+    g.dataset.edgeId=edge.id;
+    if(diagramMode==='rm-edge'){g.onclick=()=>removeEdge(edge.id);}
+    const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',fc.x);line.setAttribute('y1',fc.y);
+    line.setAttribute('x2',tc.x);line.setAttribute('y2',tc.y);
+    // style by type
+    const styles={
+      associacao:{stroke:'#4A4740',width:1.5,dash:'none',end:'url(#arr)',start:'none'},
+      interdependencia:{stroke:'#4A4740',width:1.5,dash:'none',end:'url(#arr)',start:'url(#arr2)'},
+      fragil:{stroke:'#4A4740',width:1,dash:'4 3',end:'url(#arr)',start:'none'},
+      tensao:{stroke:'#993C1D',width:2.5,dash:'none',end:'url(#arr)',start:'none'},
+      ausencia:{stroke:'#4A4740',width:1,dash:'2 5',end:'url(#arr)',start:'none'},
+    };
+    const s=styles[edge.type]||styles.associacao;
+    line.setAttribute('stroke',s.stroke);
+    line.setAttribute('stroke-width',s.width);
+    if(s.dash!=='none')line.setAttribute('stroke-dasharray',s.dash);
+    line.setAttribute('marker-end',s.end);
+    if(s.start!=='none')line.setAttribute('marker-start',s.start);
+    g.appendChild(line);
+    // edge label
+    if(edge.label){
+      const mx=(fc.x+tc.x)/2,my=(fc.y+tc.y)/2;
+      const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+      bg.setAttribute('x',mx-edge.label.length*3.5-3);bg.setAttribute('y',my-9);
+      bg.setAttribute('width',edge.label.length*7+6);bg.setAttribute('height',14);
+      bg.setAttribute('fill','var(--surface)');bg.setAttribute('rx','3');
+      g.appendChild(bg);
+      const txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+      txt.setAttribute('x',mx);txt.setAttribute('y',my);
+      txt.setAttribute('text-anchor','middle');txt.setAttribute('dominant-baseline','central');
+      txt.style.fontSize='9px';txt.style.fill='var(--ink3)';txt.style.fontFamily='var(--sans)';
+      txt.textContent=edge.label;
+      g.appendChild(txt);
+    }
+    // hover remove indicator
+    if(diagramMode==='rm-edge'){
+      const x=document.createElementNS('http://www.w3.org/2000/svg','text');
+      x.setAttribute('x',(fc.x+tc.x)/2);x.setAttribute('y',(fc.y+tc.y)/2+14);
+      x.setAttribute('text-anchor','middle');x.style.fontSize='10px';x.style.fill='var(--coral)';x.style.fontFamily='var(--sans)';
+      x.textContent='× remover';
+      g.appendChild(x);
+    }
+    svg.appendChild(g);
+  });
+  // render nodes as DOM elements
+  diagramNodes.forEach(node=>{
+    const el=document.createElement('div');
+    el.className='d-node d-node-'+node.type;
+    el.dataset.nodeId=node.id;
+    el.style.left=node.x+'px';el.style.top=node.y+'px';
+    if(node.type==='outro'){
+      el.innerHTML=`<div class="d-node-outro-inner"></div><span class="d-node-outro-label" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">${node.label}</span>`;
+    }else{
+      el.innerHTML=`<span class="node-label">${node.label}</span>`;
+    }
+    // drag
+    el.addEventListener('mousedown',e=>startDrag(e,node));
+    el.addEventListener('touchstart',e=>startDragTouch(e,node),{passive:false});
+    // connect click
+    el.addEventListener('click',e=>{
+      if(diagramMode==='connect')handleConnectClick(node,el);
+    });
+    canvas.appendChild(el);
+  });
+}
+
+function setMode(m){
+  diagramMode=m;connectSource=null;
+  document.querySelectorAll('.diagram-mode-btn').forEach(b=>{b.classList.remove('active','connect-active');});
+  const hints={
+    move:'modo mover — arraste os nós para reposicioná-los.',
+    connect:'modo conectar — clique num nó de origem, depois no nó de destino.',
+    'rm-edge':'modo remover aresta — clique numa aresta para removê-la.'
   };
+  document.getElementById('diagram-hint').textContent=hints[m]||'';
+  const canvas=document.getElementById('diagram-canvas');
+  canvas.classList.toggle('connecting',m==='connect');
+  if(m==='move'){document.getElementById('btn-move').classList.add('active');}
+  else if(m==='connect'){document.getElementById('btn-connect').classList.add('connect-active');}
+  else{document.getElementById('btn-rm-edge').classList.add('active');}
+  renderDiagram();
+}
 
-  if (editandoId) {
-    const idx = laminas.findIndex(l => l.id === editandoId);
-    if (idx > -1) laminas[idx] = lamina;
-    editandoId = null;
-  } else {
-    laminas.unshift(lamina);
+function handleConnectClick(node,el){
+  if(!connectSource){
+    connectSource=node;
+    el.classList.add('connecting-source');
+    document.getElementById('diagram-hint').textContent='nó de origem: "'+node.label+'" — agora clique no nó de destino.';
+  }else{
+    if(connectSource.id===node.id){connectSource=null;renderDiagram();return;}
+    pendingEdge={from:connectSource.id,to:node.id};
+    connectSource=null;
+    openEdgeModal();
   }
+}
 
-  const btn = document.getElementById('btn-salvar');
-  btn.disabled = true;
-  btn.textContent = 'salvando...';
+function openEdgeModal(){
+  selectedEdgeType=null;
+  document.getElementById('edge-label-input').value='';
+  document.querySelectorAll('.edge-type-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('modal-edge').style.display='flex';
+}
 
+function selectEdgeType(t){
+  selectedEdgeType=t;
+  document.querySelectorAll('.edge-type-btn').forEach(b=>b.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
+}
+
+function confirmEdge(){
+  if(!selectedEdgeType){showToast('selecione o tipo de relação');return;}
+  const label=document.getElementById('edge-label-input').value.trim();
+  diagramEdges.push({id:Date.now().toString(),from:pendingEdge.from,to:pendingEdge.to,type:selectedEdgeType,label});
+  document.getElementById('modal-edge').style.display='none';
+  pendingEdge=null;
+  setMode('connect');
+}
+
+function cancelEdge(){
+  pendingEdge=null;connectSource=null;
+  document.getElementById('modal-edge').style.display='none';
+  renderDiagram();
+}
+
+function removeEdge(id){
+  diagramEdges=diagramEdges.filter(e=>e.id!==id);
+  renderDiagram();
+}
+
+// DRAG
+function startDrag(e,node){
+  if(diagramMode!=='move')return;
+  e.preventDefault();
+  const canvas=document.getElementById('diagram-canvas');
+  const rect=canvas.getBoundingClientRect();
+  dragNode=node;dragOffX=e.clientX-rect.left-node.x;dragOffY=e.clientY-rect.top-node.y;
+  window.addEventListener('mousemove',onDrag);window.addEventListener('mouseup',stopDrag);
+}
+function startDragTouch(e,node){
+  if(diagramMode!=='move')return;
+  e.preventDefault();
+  const canvas=document.getElementById('diagram-canvas');
+  const rect=canvas.getBoundingClientRect();
+  const t=e.touches[0];
+  dragNode=node;dragOffX=t.clientX-rect.left-node.x;dragOffY=t.clientY-rect.top-node.y;
+  window.addEventListener('touchmove',onDragTouch,{passive:false});
+  window.addEventListener('touchend',stopDrag);
+}
+function onDrag(e){
+  if(!dragNode)return;
+  const canvas=document.getElementById('diagram-canvas');
+  const rect=canvas.getBoundingClientRect();
+  dragNode.x=Math.max(0,Math.min(e.clientX-rect.left-dragOffX,rect.width-96));
+  dragNode.y=Math.max(0,Math.min(e.clientY-rect.top-dragOffY,rect.height-72));
+  renderDiagram();
+}
+function onDragTouch(e){
+  e.preventDefault();
+  const t=e.touches[0];
+  const canvas=document.getElementById('diagram-canvas');
+  const rect=canvas.getBoundingClientRect();
+  dragNode.x=Math.max(0,Math.min(t.clientX-rect.left-dragOffX,rect.width-96));
+  dragNode.y=Math.max(0,Math.min(t.clientY-rect.top-dragOffY,rect.height-72));
+  renderDiagram();
+}
+function stopDrag(){
+  dragNode=null;
+  window.removeEventListener('mousemove',onDrag);window.removeEventListener('mouseup',stopDrag);
+  window.removeEventListener('touchmove',onDragTouch);window.removeEventListener('touchend',stopDrag);
+}
+
+// SAVE
+async function salvarLamina(){
+  const data=document.getElementById('f-data').value;
+  const titulo=document.getElementById('f-titulo').value.trim();
+  const tSel=document.querySelector('.territorio-tag.sel');
+  const territorio=tSel?(tSel.textContent==='Outro'?document.getElementById('f-outro-territorio').value.trim():tSel.textContent):'';
+  if(!data){showToast('indique a data do campo');return;}
+  if(!territorio){showToast('selecione o território');return;}
+  const lamina={
+    id:editandoId||Date.now().toString(),
+    data,titulo:titulo||`campo — ${data}`,territorio,
+    foco:document.getElementById('f-foco').value.trim(),
+    relato:document.getElementById('f-relato').value.trim(),
+    afeto:document.getElementById('f-afeto').value.trim(),
+    dados:{
+      atores:getDados('rel-atores','ator').map(d=>d.label),
+      praticas:getDados('rel-praticas','pratica').map(d=>d.label),
+      espacos:getDados('rel-espacos','espaco').map(d=>d.label),
+      outros:getDados('rel-outros','outro').map(d=>d.label)
+    },
+    diagrama:{nodes:diagramNodes,edges:diagramEdges},
+    status:currentStatus,
+    arquivos:uploadedFiles.map(f=>({name:f.name,type:f.type,data:f.data})),
+    criadaEm:editandoId?(laminas.find(l=>l.id===editandoId)?.criadaEm||Date.now()):Date.now(),
+    atualizadaEm:Date.now()
+  };
+  if(editandoId){const idx=laminas.findIndex(l=>l.id===editandoId);if(idx>-1)laminas[idx]=lamina;editandoId=null;}
+  else{laminas.unshift(lamina);}
+  const btn=document.getElementById('btn-salvar');
+  btn.disabled=true;btn.textContent='salvando...';
   await salvarDrive();
-
-  btn.disabled = false;
-  btn.textContent = 'Salvar lâmina';
+  btn.disabled=false;btn.textContent='Salvar lâmina';
   showToast('lâmina salva no Drive');
   limparForm();
-  showView('arquivo', document.getElementById('nav-arquivo'));
+  showView('arquivo',document.getElementById('nav-arquivo'));
 }
 
-function limparForm() {
-  ['f-data','f-titulo','f-relato','f-afeto'].forEach(id => { document.getElementById(id).value = ''; });
-  const outro = document.getElementById('f-outro-territorio');
-  outro.value = ''; outro.style.display = 'none';
-  document.querySelectorAll('.territorio-tag').forEach(b => b.classList.remove('sel'));
-  ['rel-atores','rel-praticas','rel-espacos','rel-tensoes'].forEach(c => document.getElementById(c).innerHTML = '');
-  uploadedFiles = [];
-  document.getElementById('preview-grid').innerHTML = '';
-  setStatus('rascunho');
-  editandoId = null;
-  document.getElementById('form-page-title').textContent = 'Nova lâmina';
+function limparForm(){
+  ['f-data','f-titulo','f-foco','f-relato','f-afeto'].forEach(id=>{document.getElementById(id).value='';});
+  const outro=document.getElementById('f-outro-territorio');outro.value='';outro.style.display='none';
+  document.querySelectorAll('.territorio-tag').forEach(b=>b.classList.remove('sel'));
+  ['rel-atores','rel-praticas','rel-espacos','rel-outros'].forEach(c=>document.getElementById(c).innerHTML='');
+  uploadedFiles=[];document.getElementById('preview-grid').innerHTML='';
+  diagramNodes=[];diagramEdges=[];renderDiagram();
+  setStatus('rascunho');editandoId=null;
+  document.getElementById('form-page-title').textContent='Nova lâmina';
 }
 
-function renderArquivo() {
+// ARQUIVO
+function renderArquivo(){
   updateStats();
-  const grid = document.getElementById('laminas-grid');
-  let filtered = laminas;
-  if (currentFilter !== 'todos') {
-    if (currentFilter === 'rascunho' || currentFilter === 'completa') {
-      filtered = laminas.filter(l => l.status === currentFilter);
-    } else {
-      filtered = laminas.filter(l => l.territorio === currentFilter);
-    }
+  const grid=document.getElementById('laminas-grid');
+  let filtered=laminas;
+  if(currentFilter!=='todos'){
+    if(currentFilter==='rascunho'||currentFilter==='completa')filtered=laminas.filter(l=>l.status===currentFilter);
+    else filtered=laminas.filter(l=>l.territorio===currentFilter);
   }
-  const subs = { todos:'todas as lâminas', rascunho:'rascunhos', completa:'lâminas completas' };
-  document.getElementById('arquivo-subtitle').textContent = subs[currentFilter] || currentFilter;
-
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="empty-state"><p>nenhuma lâmina aqui ainda</p><small>crie uma nova lâmina para começar</small></div>`;
-    return;
-  }
-
-  grid.innerHTML = filtered.map(l => {
-    const thumb = l.arquivos?.find(f => f.type?.startsWith('image/'));
-    const thumbHtml = thumb ? `<img class="lamina-thumb" src="${thumb.data}" alt="">` : '';
-    const snippet = l.relato || l.afeto || '';
-    const totalRel = Object.values(l.relacoes || {}).flat().length;
-    const statusTag = l.status === 'rascunho'
-      ? `<span class="tag tag-amber">rascunho</span>`
-      : `<span class="tag tag-green">completa</span>`;
-    return `<div class="lamina-card" onclick="verDetalhe('${l.id}')">
+  const subs={todos:'todas as lâminas',rascunho:'rascunhos',completa:'lâminas completas'};
+  document.getElementById('arquivo-subtitle').textContent=subs[currentFilter]||currentFilter;
+  if(!filtered.length){grid.innerHTML=`<div class="empty-state"><p>nenhuma lâmina aqui ainda</p><small>crie uma nova lâmina para começar</small></div>`;return;}
+  grid.innerHTML=filtered.map(l=>{
+    const thumb=l.arquivos?.find(f=>f.type?.startsWith('image/'));
+    const thumbHtml=thumb?`<img class="lamina-thumb" src="${thumb.data}" alt="">`:''
+    const snippet=l.foco||l.relato||l.afeto||'';
+    const totalRel=(l.diagrama?.edges||[]).length;
+    const totalNos=(l.diagrama?.nodes||[]).length;
+    const statusTag=l.status==='rascunho'?`<span class="tag tag-amber">rascunho</span>`:`<span class="tag tag-green">completa</span>`;
+    return`<div class="lamina-card" onclick="verDetalhe('${l.id}')">
       ${thumbHtml}
       <div class="lamina-meta">
         <span class="tag-date">${l.data}</span>
-        <span class="tag tag-teal">${l.territorio}</span>
-        ${statusTag}
+        <span class="tag tag-teal">${l.territorio}</span>${statusTag}
       </div>
       <div class="lamina-title">${l.titulo}</div>
-      ${snippet ? `<div class="lamina-snippet">${snippet.substring(0,110)}${snippet.length>110?'...':''}</div>` : ''}
+      ${l.foco?`<div class="lamina-snippet">↳ ${l.foco}</div>`:''}
+      ${snippet&&!l.foco?`<div class="lamina-snippet">${snippet.substring(0,100)}${snippet.length>100?'...':''}</div>`:''}
       <div class="lamina-foot">
-        <span>${totalRel} relação${totalRel!==1?'ões':''} observada${totalRel!==1?'s':''}</span>
+        <span>${totalNos} nó${totalNos!==1?'s':''} · ${totalRel} relação${totalRel!==1?'ões':''}</span>
         <span>${l.arquivos?.length||0} arquivo${(l.arquivos?.length||0)!==1?'s':''}</span>
       </div>
     </div>`;
   }).join('');
 }
 
-function filtrar(btn, val) {
-  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentFilter = val;
-  renderArquivo();
+function filtrar(btn,val){
+  document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');currentFilter=val;renderArquivo();
+}
+function filtrarSidebar(btn,val){
+  document.querySelectorAll('.sidebar-item').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');currentFilter=val;
+  showView('arquivo',document.getElementById('nav-arquivo'));
+  document.querySelectorAll('.filter-chip').forEach(b=>{b.classList.toggle('active',b.getAttribute('onclick')?.includes(`'${val}'`));});
 }
 
-function filtrarSidebar(btn, val) {
-  document.querySelectorAll('.sidebar-item').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentFilter = val;
-  showView('arquivo', document.getElementById('nav-arquivo'));
-  document.querySelectorAll('.filter-chip').forEach(b => {
-    b.classList.toggle('active', b.getAttribute('onclick')?.includes(`'${val}'`));
-  });
-}
-
-function verDetalhe(id) {
-  const l = laminas.find(l => l.id === id);
-  if (!l) return;
-  currentDetalheId = id;
-  document.getElementById('det-titulo').textContent = l.titulo;
-  const statusTag = l.status === 'rascunho'
-    ? `<span class="tag tag-amber">rascunho</span>`
-    : `<span class="tag tag-green">completa</span>`;
-  document.getElementById('det-meta').innerHTML = `
-    <span class="tag-date" style="font-size:12px;color:var(--ink2)">${l.data}</span>
-    <span class="tag tag-teal">${l.territorio}</span>${statusTag}`;
-
-  const secs = [];
-  if (l.arquivos?.length) {
-    const media = l.arquivos.map(f =>
-      f.type?.startsWith('image/')
-        ? `<div class="detalhe-media-item"><img src="${f.data}"></div>`
-        : `<div class="detalhe-media-item" style="display:flex;align-items:center;justify-content:center;background:var(--bg2);font-size:10px;padding:8px;text-align:center;">${f.name}</div>`
-    ).join('');
+function verDetalhe(id){
+  const l=laminas.find(l=>l.id===id);if(!l)return;
+  currentDetalheId=id;
+  document.getElementById('det-titulo').textContent=l.titulo;
+  const statusTag=l.status==='rascunho'?`<span class="tag tag-amber">rascunho</span>`:`<span class="tag tag-green">completa</span>`;
+  document.getElementById('det-meta').innerHTML=`<span class="tag-date" style="font-size:12px;color:var(--ink2)">${l.data}</span><span class="tag tag-teal">${l.territorio}</span>${statusTag}`;
+  const secs=[];
+  if(l.foco)secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Foco atencional</div><div class="detalhe-text">${l.foco}</div></div>`);
+  if(l.arquivos?.length){
+    const media=l.arquivos.map(f=>f.type?.startsWith('image/')?`<div class="detalhe-media-item"><img src="${f.data}"></div>`:`<div class="detalhe-media-item" style="display:flex;align-items:center;justify-content:center;background:var(--bg2);font-size:10px;padding:8px;text-align:center">${f.name}</div>`).join('');
     secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Materiais visuais (${l.arquivos.length})</div><div class="detalhe-media">${media}</div></div>`);
   }
-  if (l.relato) secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Relato de campo</div><div class="detalhe-text">${l.relato}</div></div>`);
-  if (l.afeto) secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Registro afetivo</div><div class="detalhe-text">${l.afeto}</div></div>`);
-  const rel = l.relacoes || {};
-  const hasRel = Object.values(rel).some(a => a?.length);
-  if (hasRel) {
-    const blocos = [
-      ['Atores', rel.atores], ['Práticas', rel.praticas],
-      ['Espaços de acontecimento', rel.espacos], ['Tensões e ausências', rel.tensoes]
-    ].map(([t, items]) =>
-      `<div class="detalhe-rel-bloco"><div class="detalhe-rel-titulo">${t}</div>${
-        (items?.length ? items : ['—']).map(i => `<div class="detalhe-rel-item">${i}</div>`).join('')
-      }</div>`
+  if(l.relato)secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Relato de campo</div><div class="detalhe-text">${l.relato}</div></div>`);
+  if(l.afeto)secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Registro afetivo</div><div class="detalhe-text">${l.afeto}</div></div>`);
+  const d=l.dados||{};
+  const hasD=Object.values(d).some(a=>a?.length);
+  if(hasD){
+    const blocos=[['Atores',d.atores],['Práticas',d.praticas],['Espaços de acontecimento',d.espacos],['Outros',d.outros]].map(([t,items])=>
+      `<div class="detalhe-rel-bloco"><div class="detalhe-rel-titulo">${t}</div>${(items?.length?items:['—']).map(i=>`<div class="detalhe-rel-item">${i}</div>`).join('')}</div>`
     ).join('');
-    secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Relações observadas</div><div class="detalhe-relacoes">${blocos}</div></div>`);
+    secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Dados relacionais</div><div class="detalhe-relacoes">${blocos}</div></div>`);
   }
-  document.getElementById('det-sections').innerHTML = secs.join('');
-  showView('detalhe');
-  document.querySelectorAll('.topbar-btn').forEach(b => b.classList.remove('active'));
+  // diagrama preview
+  if(l.diagrama?.nodes?.length){
+    secs.push(`<div class="detalhe-block"><div class="detalhe-block-label">Diagrama — ${l.diagrama.nodes.length} nós · ${l.diagrama.edges?.length||0} relações</div><div style="font-family:var(--body);font-size:12px;color:var(--ink3);font-style:italic">Abra "Editar lâmina" para visualizar e modificar o diagrama interativo.</div></div>`);
+  }
+  document.getElementById('det-sections').innerHTML=secs.join('');
+  showView('detalhe');document.querySelectorAll('.topbar-btn').forEach(b=>b.classList.remove('active'));
 }
 
-function editarLamina() {
-  const l = laminas.find(l => l.id === currentDetalheId);
-  if (!l) return;
-  editandoId = l.id;
-  document.getElementById('f-data').value = l.data;
-  document.getElementById('f-titulo').value = l.titulo;
-  document.getElementById('f-relato').value = l.relato || '';
-  document.getElementById('f-afeto').value = l.afeto || '';
-  uploadedFiles = l.arquivos ? [...l.arquivos] : [];
-  renderPreviews();
-  setStatus(l.status || 'rascunho');
-  document.querySelectorAll('.territorio-tag').forEach(b => {
-    if (b.textContent.trim() === l.territorio) b.classList.add('sel');
-  });
-  const rel = l.relacoes || {};
-  setRelacoes('rel-atores', rel.atores);
-  setRelacoes('rel-praticas', rel.praticas);
-  setRelacoes('rel-espacos', rel.espacos);
-  setRelacoes('rel-tensoes', rel.tensoes);
-  document.getElementById('form-page-title').textContent = 'Editar lâmina';
-  showView('nova', document.getElementById('nav-nova'));
+function editarLamina(){
+  const l=laminas.find(l=>l.id===currentDetalheId);if(!l)return;
+  editandoId=l.id;
+  document.getElementById('f-data').value=l.data;
+  document.getElementById('f-titulo').value=l.titulo;
+  document.getElementById('f-foco').value=l.foco||'';
+  document.getElementById('f-relato').value=l.relato||'';
+  document.getElementById('f-afeto').value=l.afeto||'';
+  uploadedFiles=l.arquivos?[...l.arquivos]:[];
+  renderPreviews();setStatus(l.status||'rascunho');
+  document.querySelectorAll('.territorio-tag').forEach(b=>{if(b.textContent.trim()===l.territorio)b.classList.add('sel');});
+  const d=l.dados||{};
+  setDados('rel-atores','ator',d.atores||[]);
+  setDados('rel-praticas','pratica',d.praticas||[]);
+  setDados('rel-espacos','espaco',d.espacos||[]);
+  setDados('rel-outros','outro',d.outros||[]);
+  diagramNodes=l.diagrama?.nodes?JSON.parse(JSON.stringify(l.diagrama.nodes)):[];
+  diagramEdges=l.diagrama?.edges?JSON.parse(JSON.stringify(l.diagrama.edges)):[];
+  document.getElementById('form-page-title').textContent='Editar lâmina';
+  showView('nova',document.getElementById('nav-nova'));
+  setTimeout(()=>{renderDiagram();},100);
 }
 
-async function excluirLamina() {
-  if (!confirm('Excluir esta lâmina? A ação não pode ser desfeita.')) return;
-  laminas = laminas.filter(l => l.id !== currentDetalheId);
-  await salvarDrive();
-  showToast('lâmina excluída');
-  showView('arquivo', document.getElementById('nav-arquivo'));
+async function excluirLamina(){
+  if(!confirm('Excluir esta lâmina? A ação não pode ser desfeita.'))return;
+  laminas=laminas.filter(l=>l.id!==currentDetalheId);
+  await salvarDrive();showToast('lâmina excluída');
+  showView('arquivo',document.getElementById('nav-arquivo'));
 }
 
-function updateStats() {
-  const total = laminas.length;
-  const rasc = laminas.filter(l => l.status === 'rascunho').length;
-  const comp = laminas.filter(l => l.status === 'completa').length;
-  document.getElementById('stat-total').textContent = total;
-  document.getElementById('stat-rascunho').textContent = rasc;
-  document.getElementById('stat-completa').textContent = comp;
-  document.getElementById('top-counter').textContent = `${total} lâmina${total!==1?'s':''}`;
+function updateStats(){
+  const total=laminas.length;const rasc=laminas.filter(l=>l.status==='rascunho').length;const comp=laminas.filter(l=>l.status==='completa').length;
+  document.getElementById('stat-total').textContent=total;
+  document.getElementById('stat-rascunho').textContent=rasc;
+  document.getElementById('stat-completa').textContent=comp;
+  document.getElementById('top-counter').textContent=`${total} lâmina${total!==1?'s':''}`;
 }
 
-function updateSidebar() {
-  document.getElementById('sb-todos').textContent = laminas.length;
-  document.getElementById('sb-vergel').textContent = laminas.filter(l => l.territorio === 'Vergel do Lago').length;
-  document.getElementById('sb-pontal').textContent = laminas.filter(l => l.territorio === 'Pontal da Barra').length;
-  document.getElementById('sb-rascunho').textContent = laminas.filter(l => l.status === 'rascunho').length;
-  document.getElementById('sb-completa').textContent = laminas.filter(l => l.status === 'completa').length;
+function updateSidebar(){
+  document.getElementById('sb-todos').textContent=laminas.length;
+  document.getElementById('sb-vergel').textContent=laminas.filter(l=>l.territorio==='Vergel do Lago').length;
+  document.getElementById('sb-pontal').textContent=laminas.filter(l=>l.territorio==='Pontal da Barra').length;
+  document.getElementById('sb-rascunho').textContent=laminas.filter(l=>l.status==='rascunho').length;
+  document.getElementById('sb-completa').textContent=laminas.filter(l=>l.status==='completa').length;
 }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2400);
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
 }
 </script>
 </body>
 </html>
+HTMLEOF
+echo "done"
